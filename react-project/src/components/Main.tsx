@@ -34,7 +34,7 @@ export class Main extends Component {
 
   handleSearchButton = (e: React.FormEvent<HTMLElement>): void => {
     e.preventDefault();
-    this.fetchData(this.state.searchInput);
+    this.fetchData(this.state.searchInput.trim().toLowerCase());
   };
 
   handleThrowButton = (e: React.MouseEvent<HTMLElement>): void => {
