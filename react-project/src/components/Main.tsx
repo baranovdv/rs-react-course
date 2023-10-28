@@ -9,6 +9,7 @@ const MAIN_DATA = {
   inputLabel: 'Search by name:',
   tableHeaders: ['Name:', 'Description:'],
   APIurl: 'https://rickandmortyapi.com/api/character/',
+  localStorageQuery: 'search_Query',
 };
 
 type State = {
@@ -69,6 +70,7 @@ export class Main extends Component {
           tableContent: tableData,
           status: 'idle',
         });
+        localStorage.setItem(MAIN_DATA.localStorageQuery, query || '');
       })
       .catch((e: Error) => {
         console.log(e);
@@ -80,10 +82,12 @@ export class Main extends Component {
   };
 
   componentDidMount(): void {
-    this.fetchData();
+    const query = localStorage.getItem(MAIN_DATA.localStorageQuery);
+    this.setState({
+      searchInput: query,
+    });
+    this.fetchData(query ?? '');
   }
-
-  componentWillUnmount(): void {}
 
   render() {
     return (
