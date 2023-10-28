@@ -1,5 +1,6 @@
 import { ChangeEvent, Component } from 'react';
 import { AppStatus, ResponseData, ResultData, TableRow } from '../data/types';
+import { InvokeError } from './InvokeError';
 import { Spinner } from './Spinner';
 import { Table } from './Table';
 import { Button } from './ui/Button';
@@ -40,6 +41,9 @@ export class Main extends Component {
 
   handleThrowButton = (e: React.MouseEvent<HTMLElement>): void => {
     e.preventDefault();
+    this.setState({
+      status: 'throw',
+    });
   };
 
   convertToTableRow = (result: ResultData): TableRow => {
@@ -92,6 +96,7 @@ export class Main extends Component {
   render() {
     return (
       <main className="py-4 px-5 bg-slate-300">
+        {this.state.status === 'throw' && <InvokeError />}
         <form className="flex gap-5" onSubmit={this.handleSearchButton}>
           <Input
             value={this.state.searchInput}
@@ -99,6 +104,7 @@ export class Main extends Component {
             label={MAIN_DATA.inputLabel}
           />
           <Button onClick={this.handleSearchButton}>Search</Button>
+
           <Button onClick={this.handleThrowButton}>Throw Error</Button>
         </form>
         <hr

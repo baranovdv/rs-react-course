@@ -4,7 +4,7 @@ export type TableRow = {
   description: string;
 };
 
-export type AppStatus = 'idle' | 'wait' | 'error';
+export type AppStatus = 'idle' | 'wait' | 'error' | 'throw';
 
 export type ResultData = {
   id: number;
