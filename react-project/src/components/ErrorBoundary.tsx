@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
+import { Button } from './ui/Button';
 
 type State = {
   hasError: boolean;
@@ -19,7 +20,14 @@ export class ErrorBoundary extends Component<{
 
   render() {
     if (this.state.hasError) {
-      return <h1>Something went wrong. Please try again later.</h1>;
+      return (
+        <div className="py-8 flex flex-col gap-6 items-center bg-slate-300 h-screen">
+          <h1 className="text-2xl font-bold">
+            Something went wrong. Please try again later.
+          </h1>
+          <Button onClick={() => window.location.reload()}>Refresh</Button>
+        </div>
+      );
     }
 
     return this.props.children;
