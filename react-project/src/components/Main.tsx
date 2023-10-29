@@ -67,7 +67,10 @@ export class Main extends Component {
     fetch(MAIN_DATA.APIurl + q)
       .then((response) => response.json())
       .then((data: ResponseData) => {
-        const tableData = data.results.map((item) =>
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        const tableData = data.results?.map((item) =>
           this.convertToTableRow(item)
         );
         this.setState({
@@ -77,7 +80,6 @@ export class Main extends Component {
         localStorage.setItem(MAIN_DATA.localStorageQuery, query || '');
       })
       .catch((e: Error) => {
-        console.log(e);
         this.setState({
           status: 'error',
           error: e.message,
@@ -117,7 +119,11 @@ export class Main extends Component {
         />
         {this.state.status === 'wait' && <Spinner />}
 
-        {this.state.status === 'error' && <h1>{this.state.error}</h1>}
+        {this.state.status === 'error' && (
+          <h1 className="py-4 text-2xl font-bold">
+            Error message: {this.state.error}
+          </h1>
+        )}
 
         {this.state.status === 'idle' && (
           <Table

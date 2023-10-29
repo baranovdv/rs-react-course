@@ -28,6 +28,7 @@ export type ResponseInfo = {
 };
 
 export type ResponseData = {
-  info: ResponseInfo;
-  results: ResultData[];
+  info?: ResponseInfo;
+  results?: ResultData[];
+  error?: string;
 };
