@@ -1,49 +1,27 @@
-import { ChangeEvent, Component } from 'react';
+import { Component } from 'react';
+import { COMMON_DATA } from '../data/data';
 import { AppStatus, ResponseData, ResultData, TableRow } from '../data/types';
-import { InvokeError } from './InvokeError';
+import { Menu } from './Menu';
 import { Spinner } from './Spinner';
 import { Table } from './Table';
-import { Button } from './ui/Button';
-import { Input } from './ui/Input';
 
-const MAIN_DATA = {
-  inputLabel: 'Search by name:',
-  tableHeaders: ['Name:', 'Description:'],
-  APIurl: 'https://rickandmortyapi.com/api/character/',
-  localStorageQuery: 'search_Query',
-};
+interface MainInterface {
+  state: {
+    status: AppStatus;
+    tableContent: TableRow[];
+    error: string;
+  };
+}
 
-type State = {
-  status: AppStatus;
-  searchInput: string;
-  tableContent: TableRow[];
-  error: string;
-};
-
-export class Main extends Component {
-  state: State = {
+export class Main extends Component<MainInterface['state']> {
+  state = {
     status: 'idle',
-    searchInput: '',
     tableContent: [],
     error: '',
   };
 
-  handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
-    this.setState({
-      searchInput: e.target.value,
-    });
-  };
-
-  handleSearchButton = (e: React.FormEvent<HTMLElement>): void => {
-    e.preventDefault();
-    this.fetchData(this.state.searchInput.trim().toLowerCase());
-  };
-
-  handleThrowButton = (e: React.MouseEvent<HTMLElement>): void => {
-    e.preventDefault();
-    this.setState({
-      status: 'throw',
-    });
+  handleSearch = (query: string): void => {
+    this.fetchData(query.trim().toLowerCase());
   };
 
   convertToTableRow = (result: ResultData): TableRow => {
@@ -64,7 +42,7 @@ export class Main extends Component {
       status: 'wait',
     });
     const q = query !== undefined ? '?name=' + query : '';
-    fetch(MAIN_DATA.APIurl + q)
+    fetch(COMMON_DATA.APIurl + q)
       .then((response) => response.json())
       .then((data: ResponseData) => {
         if (data.error) {
@@ -77,7 +55,7 @@ export class Main extends Component {
           tableContent: tableData,
           status: 'idle',
         });
-        localStorage.setItem(MAIN_DATA.localStorageQuery, query || '');
+        localStorage.setItem(COMMON_DATA.localStorageQuery, query || '');
       })
       .catch((e: Error) => {
         this.setState({
@@ -88,7 +66,7 @@ export class Main extends Component {
   };
 
   componentDidMount(): void {
-    const query = localStorage.getItem(MAIN_DATA.localStorageQuery);
+    const query = localStorage.getItem(COMMON_DATA.localStorageQuery);
     this.setState({
       searchInput: query,
     });
@@ -98,17 +76,10 @@ export class Main extends Component {
   render() {
     return (
       <main className="py-4 px-5 bg-slate-300">
-        {this.state.status === 'throw' && <InvokeError />}
-        <form className="flex gap-5" onSubmit={this.handleSearchButton}>
-          <Input
-            value={this.state.searchInput}
-            setValue={this.handleInput}
-            label={MAIN_DATA.inputLabel}
-          />
-          <Button onClick={this.handleSearchButton}>Search</Button>
-
-          <Button onClick={this.handleThrowButton}>Throw Error</Button>
-        </form>
+        <Menu
+          onSearchButton={this.handleSearch}
+          inputLabel={COMMON_DATA.inputLabel}
+        />
         <hr
           style={{
             marginTop: '10px',
@@ -127,7 +98,7 @@ export class Main extends Component {
 
         {this.state.status === 'idle' && (
           <Table
-            headers={MAIN_DATA.tableHeaders}
+            headers={COMMON_DATA.tableHeaders}
             data={this.state.tableContent}
           />
         )}

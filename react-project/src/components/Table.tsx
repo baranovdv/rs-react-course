@@ -1,12 +1,14 @@
 import { Component } from 'react';
 import { TableRow } from '../data/types';
 
-type TableProps = {
-  headers: string[];
-  data?: TableRow[];
-};
+interface TableInterface {
+  props: {
+    headers: string[];
+    data?: TableRow[];
+  };
+}
 
-export class Table extends Component<TableProps> {
+export class Table extends Component<TableInterface['props']> {
   render() {
     return (
       <table className="w-full p-1 border-4 border-red-800">
