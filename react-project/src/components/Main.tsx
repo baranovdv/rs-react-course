@@ -8,7 +8,10 @@ export default function Main() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const itemsOnPage = useRef(COMMON_DATA.defaultItemsOnPage);
+  const itemsOnPage = useRef(
+    Number(localStorage.getItem(COMMON_DATA.localStorageItemsOnPage)) ||
+      COMMON_DATA.defaultItemsOnPage
+  );
 
   const onSubmitHandler = (searchInput: string) => {
     searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);

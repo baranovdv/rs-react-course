@@ -3,6 +3,7 @@ export const COMMON_DATA = {
   tableHeaders: ['Name:', 'Description:'],
   APIurl: 'https://rickandmortyapi.com/api/character/',
   localStorageQuery: 'search_Query',
+  localStorageItemsOnPage: 'itemsOnPage',
   pageURLQuery: 'page',
   detailsURLQuery: 'details',
   defaultItemsOnPage: 20,
