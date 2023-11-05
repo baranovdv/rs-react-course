@@ -1,4 +1,4 @@
-export type TableRow = {
+export type Character = {
   id: number;
   name: string;
   description: string;
@@ -31,4 +31,9 @@ export type ResponseData = {
   info?: ResponseInfo;
   results?: ResultData[];
   error?: string;
+};
+
+export type SelectData = {
+  selectLabel: string;
+  selectOptions: number[];
 };
