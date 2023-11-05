@@ -1,63 +1,58 @@
-import { ChangeEvent, Component } from 'react';
-import { COMMON_DATA } from '../data/data';
+import { ChangeEvent, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { COMMON_DATA, MENU_DATA } from '../data/data';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
+import Select from './ui/Select';
 
-interface MenuInterface {
-  props: {
-    onSearchButton: (query: string) => void;
-    inputLabel: string;
-  };
-  state: {
-    searchInput: string;
-    throwError: boolean;
-  };
+interface MenuProps {
+  onSubmitHandler: (searchInput: string) => void;
+  itemsOnPage: React.MutableRefObject<number>;
 }
 
-export class Menu extends Component<
-  MenuInterface['props'],
-  MenuInterface['state']
-> {
-  constructor(props: MenuInterface['props']) {
-    super(props);
-    this.state = {
-      searchInput: this.checkInput(),
-      throwError: false,
-    };
-  }
+export default function Menu({ onSubmitHandler, itemsOnPage }: MenuProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchInput, setSearchInput] = useState('');
 
-  checkInput = () => {
-    const query = localStorage.getItem(COMMON_DATA.localStorageQuery);
-    return query ? query : '';
-  };
-
-  handleSearchButton = (e: React.FormEvent<HTMLElement>): void => {
+  const handleSearchButton = (e: React.FormEvent<HTMLElement>): void => {
     e.preventDefault();
-    this.props.onSearchButton(this.state.searchInput);
+    onSubmitHandler(searchInput);
   };
 
-  handleThrowButton = (e: React.MouseEvent<HTMLElement>): void => {
-    e.preventDefault();
-
-    this.setState({ throwError: true });
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+    itemsOnPage.current = Number(e.target.value);
+    searchParams.set(COMMON_DATA.pageURLQuery, '1');
+    setSearchParams(searchParams);
   };
 
-  render() {
-    if (this.state.throwError) throw new Error();
-    else
-      return (
-        <form className="flex gap-5" onSubmit={this.handleSearchButton}>
+  return (
+    <>
+      <div className="flex justify-between items-center">
+        <form className="flex flex-1 gap-5" onSubmit={handleSearchButton}>
           <Input
-            value={this.state.searchInput}
+            value={searchInput}
             setValue={(e: ChangeEvent<HTMLInputElement>) =>
-              this.setState({ searchInput: e.target.value })
+              setSearchInput(e.target.value)
             }
-            label={this.props.inputLabel}
+            label={COMMON_DATA.inputLabel}
           />
-          <Button onClick={this.handleSearchButton}>Search</Button>
-
-          <Button onClick={this.handleThrowButton}>Throw Error</Button>
+          <Button onClick={handleSearchButton}>Search</Button>
         </form>
-      );
-  }
+        <Select
+          data={MENU_DATA}
+          selected={itemsOnPage.current}
+          onSelect={handleSelect}
+        />
+      </div>
+
+      <hr
+        style={{
+          marginTop: '10px',
+          marginBottom: '20px',
+          background: 'rgb(100,116,139)',
+          height: '4px',
+        }}
+      />
+    </>
+  );
 }
