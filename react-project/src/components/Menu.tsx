@@ -27,8 +27,11 @@ export default function Menu({ onSubmitHandler, itemsOnPage }: MenuProps) {
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <form className="flex flex-1 gap-5" onSubmit={handleSearchButton}>
+      <div className="flex justify-between items-center flex-wrap">
+        <form
+          className="flex flex-none gap-5 md:flex-1 "
+          onSubmit={handleSearchButton}
+        >
           <Input
             value={searchInput}
             setValue={(e: ChangeEvent<HTMLInputElement>) =>
