@@ -43,9 +43,10 @@ export default function Content({ query, itemsOnPage }: ContentProps) {
         Math.ceil((data.info?.count || 0) / itemsOnPage) || 0;
       setIsLoading(false);
     });
-  }, [query, page]);
+  }, [query, page, itemsOnPage]);
 
   if (isLoading) return <Spinner />;
+  if (!content) return <div>{COMMON_DATA.notFound}</div>;
   return (
     <>
       <div className="flex flex-col items-center gap-4">

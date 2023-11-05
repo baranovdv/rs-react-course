@@ -6,6 +6,7 @@ export const COMMON_DATA = {
   pageURLQuery: 'page',
   detailsURLQuery: 'details',
   defaultItemsOnPage: 20,
+  notFound: 'Results not found',
 };
 
 export const MENU_DATA = {
