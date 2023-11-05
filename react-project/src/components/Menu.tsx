@@ -12,7 +12,9 @@ interface MenuProps {
 
 export default function Menu({ onSubmitHandler, itemsOnPage }: MenuProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState(
+    localStorage.getItem(COMMON_DATA.localStorageQuery) || ''
+  );
 
   const handleSearchButton = (e: React.FormEvent<HTMLElement>): void => {
     e.preventDefault();
@@ -21,7 +23,12 @@ export default function Menu({ onSubmitHandler, itemsOnPage }: MenuProps) {
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     itemsOnPage.current = Number(e.target.value);
-    searchParams.set(COMMON_DATA.pageURLQuery, '1');
+    localStorage.setItem(
+      COMMON_DATA.localStorageItemsOnPage,
+      itemsOnPage.current.toString() ||
+        COMMON_DATA.defaultItemsOnPage.toString()
+    );
+    searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
     setSearchParams(searchParams);
   };
 
