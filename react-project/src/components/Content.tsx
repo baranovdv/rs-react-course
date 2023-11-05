@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { COMMON_DATA, NUM_OF_API_ITEMS } from '../data/data';
+import { COMMON_DATA, ERROR_DATA, NUM_OF_API_ITEMS } from '../data/data';
 import { ResponseData, ResultData } from '../data/types';
 import { fetchPage } from '../API/fetchRandM';
 import Card from './Card';
@@ -16,7 +16,9 @@ export default function Content({ query, itemsOnPage }: ContentProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const page = Number(searchParams.get(COMMON_DATA.pageURLQuery) || 0);
+  const page = Number(
+    searchParams.get(COMMON_DATA.pageURLQuery) || ERROR_DATA.pageError
+  );
 
   const numOfPages = useRef(1);
 

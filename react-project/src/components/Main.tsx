@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
-import { COMMON_DATA } from '../data/data';
+import { COMMON_DATA, ERROR_DATA } from '../data/data';
 import Content from './Content';
 import Menu from './Menu';
 
@@ -11,10 +11,20 @@ export default function Main() {
   const itemsOnPage = useRef(COMMON_DATA.defaultItemsOnPage);
 
   const onSubmitHandler = (searchInput: string) => {
-    searchParams.set(COMMON_DATA.pageURLQuery, '1');
+    searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
     setSearchParams(searchParams);
     setSearchQuery(searchInput);
   };
+
+  useEffect(() => {
+    const currentQuery = Number(
+      searchParams.get(COMMON_DATA.pageURLQuery) || ERROR_DATA.pageError
+    );
+    if (currentQuery === ERROR_DATA.pageError) {
+      searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
+      setSearchParams(searchParams);
+    }
+  }, []);
 
   return (
     <main className="py-4 px-5 bg-slate-300">

@@ -7,6 +7,7 @@ export const COMMON_DATA = {
   detailsURLQuery: 'details',
   defaultItemsOnPage: 20,
   notFound: 'Results not found',
+  startPage: '1',
 };
 
 export const MENU_DATA = {
@@ -23,4 +24,5 @@ export const NUM_OF_API_ITEMS = 20;
 export const ERROR_DATA = {
   consoleMessage: 'Error caught by ErrorBoundary:',
   htmlMessage: 'Something went wrong. Please try again later.',
+  pageError: 0,
 };
