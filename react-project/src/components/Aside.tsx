@@ -1,18 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { fetchDetails } from '../API/fetchRandM';
 import { ResultData } from '../data/types';
 import Details from './Details';
 import Spinner from './misc/Spinner';
 import { Button } from './ui/Button';
 
-interface AsideProps {
-  onClose: () => void;
-  id: number;
-}
-
-export default function ({ onClose, id }: AsideProps) {
+export default function () {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const content = useRef<ResultData | null>(null);
+
+  const id: number = Number(useParams().id) || 0;
+
+  const onClose = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     setIsLoading(true);
