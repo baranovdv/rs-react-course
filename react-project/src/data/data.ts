@@ -22,6 +22,7 @@ export const CARD_DATA = {
 export const NUM_OF_API_ITEMS = 20;
 
 export const ERROR_DATA = {
+  errorPageMessage: 'Unknown Error!',
   consoleMessage: 'Error caught by ErrorBoundary:',
   htmlMessage: 'Something went wrong. Please try again later.',
   pageError: 0,
