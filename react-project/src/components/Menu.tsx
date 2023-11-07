@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { COMMON_DATA, MENU_DATA } from '../data/data';
 import { Button } from './ui/Button';
@@ -29,6 +29,10 @@ export default function Menu({ onSubmitHandler, itemsOnPage }: MenuProps) {
     searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
     setSearchParams(searchParams);
   };
+
+  useEffect(() => {
+    setSearchInput(localStorage.getItem(COMMON_DATA.localStorageQuery) || '');
+  }, []);
 
   return (
     <>

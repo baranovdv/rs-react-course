@@ -5,7 +5,9 @@ import Content from './Content';
 import Menu from './Menu';
 
 export default function Main() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(
+    localStorage.getItem(COMMON_DATA.localStorageQuery) || ''
+  );
   const [searchParams, setSearchParams] = useSearchParams();
 
   const itemsOnPage = useRef(

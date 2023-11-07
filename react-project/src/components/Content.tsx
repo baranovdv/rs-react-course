@@ -43,6 +43,11 @@ export default function Content({ query, itemsOnPage }: ContentProps) {
       setContent(data.results?.slice(slice, slice + itemsOnPage) || null);
       numOfPages.current =
         Math.ceil((data.info?.count || 0) / itemsOnPage) || 0;
+
+      console.log(numOfPages.current);
+      if (numOfPages.current !== 0) {
+        localStorage.setItem(COMMON_DATA.localStorageQuery, query);
+      }
       setIsLoading(false);
     });
   }, [query, page, itemsOnPage]);
