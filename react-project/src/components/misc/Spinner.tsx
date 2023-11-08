@@ -1,6 +1,6 @@
 import SpinnerSvg from '../../assets/img/Spinner.svg';
 
-export default function Spinner() {
+const Spinner = () => {
   return (
     <img
       className="w-[10%] h-[10%] mx-auto animate-spin"
@@ -8,4 +8,5 @@ export default function Spinner() {
       alt="Spinner"
     />
   );
-}
+};
+export { Spinner };

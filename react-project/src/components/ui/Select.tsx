@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { SelectData } from 'src/data/types';
 
 interface SelectProps {
@@ -6,14 +7,16 @@ interface SelectProps {
   onSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export default function Select({ data, selected, onSelect }: SelectProps) {
+const Select: FC<SelectProps> = ({ data, selected, onSelect }) => {
   return (
     <label>
-      {data.selectLabel + ' '}
+      {`${data.selectLabel} `}
       <select
         className="p-1 border-2 border-red-800 bg-red-100"
         defaultValue={selected}
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => onSelect(e)}
+        onChange={(event: React.ChangeEvent<HTMLSelectElement>): void =>
+          onSelect(event)
+        }
       >
         {data.selectOptions.map((item) => {
           return (
@@ -25,4 +28,6 @@ export default function Select({ data, selected, onSelect }: SelectProps) {
       </select>
     </label>
   );
-}
+};
+
+export { Select };

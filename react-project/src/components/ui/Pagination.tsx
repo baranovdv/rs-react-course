@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { Button } from './Button';
 
 interface PaginationProps {
@@ -6,30 +7,35 @@ interface PaginationProps {
   numOfPages: number;
 }
 
-export default function Pagination({
+const Pagination: FC<PaginationProps> = ({
   page,
   onChangePage,
   numOfPages,
-}: PaginationProps) {
-  const onNextHandler = () => {
+}) => {
+  const isFirstPage: boolean = page === 1;
+  const isLastPage: boolean = page === numOfPages;
+
+  const handlePageForward = () => {
     onChangePage(page + 1);
   };
 
-  const onPrevHandler = () => {
+  const handlePageBack = () => {
     onChangePage(page - 1);
   };
 
   return (
     <div className="flex justify-center gap-2">
-      <Button onClick={onPrevHandler} disabled={page === 1}>
+      <Button onClick={handlePageBack} disabled={isFirstPage}>
         &lt;
       </Button>
       <div className="px-4 py-2 rounded-full border-2 border-red-800 bg-red-100">
         {page}
       </div>
-      <Button onClick={onNextHandler} disabled={page === numOfPages}>
+      <Button onClick={handlePageForward} disabled={isLastPage}>
         &gt;
       </Button>
     </div>
   );
-}
+};
+
+export { Pagination };

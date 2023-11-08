@@ -1,12 +1,12 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, FC } from 'react';
 
 interface InputProps {
   value: string;
-  setValue: (s: ChangeEvent<HTMLInputElement>) => void;
+  setValue: (event: ChangeEvent<HTMLInputElement>) => void;
   label: string;
 }
 
-export function Input({ value, setValue, label }: InputProps) {
+const Input: FC<InputProps> = ({ value, setValue, label }) => {
   return (
     <>
       <label className="flex items-center text-2xl" htmlFor="input">
@@ -15,9 +15,11 @@ export function Input({ value, setValue, label }: InputProps) {
       <input
         id="input"
         value={value}
-        onChange={(e) => setValue(e)}
+        onChange={(event) => setValue(event)}
         className="w-[15%] px-1 border-2 border-red-800"
       ></input>
     </>
   );
-}
+};
+
+export { Input };

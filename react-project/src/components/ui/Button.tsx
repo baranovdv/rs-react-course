@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 
 interface ButtonProps {
-  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
   children: ReactNode;
   disabled?: boolean;
 }
 
-export function Button({ onClick, children, disabled }: ButtonProps) {
+const Button: FC<ButtonProps> = ({ onClick, children, disabled = false }) => {
   return (
     <button
       className="px-4 py-2 border-2 border-red-800 bg-red-100 hover:bg-red-400 active:bg-red-900 disabled:bg-gray-100"
@@ -16,8 +16,6 @@ export function Button({ onClick, children, disabled }: ButtonProps) {
       {children}
     </button>
   );
-}
-
-Button.defaultProps = {
-  disabled: false,
 };
+
+export { Button };

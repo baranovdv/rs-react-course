@@ -1,45 +1,49 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import {
+  getSearchQueryFromLS,
+  setSearchQueryFromLS,
+} from '../utils/localStorage/localStorage';
 import { COMMON_DATA, MENU_DATA } from '../data/data';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
-import Select from './ui/Select';
+import { Select } from './ui/Select';
 
 interface MenuProps {
   onSubmitHandler: (searchInput: string) => void;
-  itemsOnPage: React.MutableRefObject<number>;
+  itemsOnPage: number;
 }
 
-export default function Menu({ onSubmitHandler, itemsOnPage }: MenuProps) {
+const Menu: FC<MenuProps> = ({ onSubmitHandler, itemsOnPage }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchInput, setSearchInput] = useState('');
 
-  const handleSearchButton = (e: React.FormEvent<HTMLElement>): void => {
+  const [searchInput, setSearchInput] = useState<string>('');
+
+  useEffect(() => {
+    setSearchInput(getSearchQueryFromLS());
+  }, []);
+
+  const handleSearchFormSubmit = (e: React.FormEvent<HTMLElement>): void => {
     e.preventDefault();
     onSubmitHandler(searchInput);
   };
 
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    itemsOnPage.current = Number(e.target.value);
-    localStorage.setItem(
-      COMMON_DATA.localStorageItemsOnPage,
-      itemsOnPage.current.toString() ||
-        COMMON_DATA.defaultItemsOnPage.toString()
-    );
+  const handleSelectChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ): void => {
+    itemsOnPage = Number(e.target.value);
+    setSearchQueryFromLS(itemsOnPage);
+
     searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
     setSearchParams(searchParams);
   };
-
-  useEffect(() => {
-    setSearchInput(localStorage.getItem(COMMON_DATA.localStorageQuery) || '');
-  }, []);
 
   return (
     <>
       <div className="flex justify-between items-center flex-wrap">
         <form
           className="flex flex-none gap-5 md:flex-1 "
-          onSubmit={handleSearchButton}
+          onSubmit={handleSearchFormSubmit}
         >
           <Input
             value={searchInput}
@@ -48,12 +52,12 @@ export default function Menu({ onSubmitHandler, itemsOnPage }: MenuProps) {
             }
             label={COMMON_DATA.inputLabel}
           />
-          <Button onClick={handleSearchButton}>Search</Button>
+          <Button onClick={handleSearchFormSubmit}>Search</Button>
         </form>
         <Select
           data={MENU_DATA}
-          selected={itemsOnPage.current}
-          onSelect={handleSelect}
+          selected={itemsOnPage}
+          onSelect={handleSelectChange}
         />
       </div>
 
@@ -67,4 +71,6 @@ export default function Menu({ onSubmitHandler, itemsOnPage }: MenuProps) {
       />
     </>
   );
-}
+};
+
+export { Menu };
