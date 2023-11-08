@@ -23,15 +23,17 @@ const Menu: FC<MenuProps> = ({ onSubmitHandler, itemsOnPage }) => {
     setSearchInput(getSearchQueryFromLS());
   }, []);
 
-  const handleSearchFormSubmit = (e: React.FormEvent<HTMLElement>): void => {
-    e.preventDefault();
+  const handleSearchFormSubmit = (
+    event: React.FormEvent<HTMLElement>
+  ): void => {
+    event.preventDefault();
     onSubmitHandler(searchInput);
   };
 
   const handleSelectChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
+    event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
-    itemsOnPage = Number(e.target.value);
+    itemsOnPage = Number(event.target.value);
     setSearchQueryFromLS(itemsOnPage);
 
     searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
@@ -47,8 +49,8 @@ const Menu: FC<MenuProps> = ({ onSubmitHandler, itemsOnPage }) => {
         >
           <Input
             value={searchInput}
-            setValue={(e: ChangeEvent<HTMLInputElement>) =>
-              setSearchInput(e.target.value)
+            setValue={(event: ChangeEvent<HTMLInputElement>) =>
+              setSearchInput(event.target.value)
             }
             label={COMMON_DATA.inputLabel}
           />
