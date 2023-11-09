@@ -63,14 +63,7 @@ const Menu: FC<MenuProps> = ({ onSubmitHandler, itemsOnPage }) => {
         />
       </div>
 
-      <hr
-        style={{
-          marginTop: '10px',
-          marginBottom: '20px',
-          background: 'rgb(100,116,139)',
-          height: '4px',
-        }}
-      />
+      <hr className="mt-[10px] mb-[20px] bg-[rgb(100,116,139)] h-[4px]" />
     </>
   );
 };
