@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   getSearchQueryFromLS,
-  setSearchQueryFromLS,
+  setItemsOnPageToLS,
 } from '../utils/localStorage/localStorage';
 import { COMMON_DATA, MENU_DATA } from '../data/data';
 import { Button } from './ui/Button';
@@ -34,7 +34,7 @@ const Menu: FC<MenuProps> = ({ onSubmitHandler, itemsOnPage }) => {
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
     itemsOnPage = Number(event.target.value);
-    setSearchQueryFromLS(itemsOnPage);
+    setItemsOnPageToLS(itemsOnPage);
 
     searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
     setSearchParams(searchParams);

@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import {
   getItemsOnPageFromLS,
@@ -15,7 +15,7 @@ const Main: FC = () => {
     getSearchQueryFromLS()
   );
 
-  const itemsOnPage = useRef<number>(getItemsOnPageFromLS());
+  const itemsOnPage = getItemsOnPageFromLS();
 
   const handleMenuSubmit = (searchInput: string) => {
     searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
@@ -38,11 +38,8 @@ const Main: FC = () => {
 
   return (
     <main className="py-4 px-5 bg-slate-300">
-      <Menu
-        onSubmitHandler={handleMenuSubmit}
-        itemsOnPage={itemsOnPage.current}
-      ></Menu>
-      <Content query={searchQuery} itemsOnPage={itemsOnPage.current}></Content>
+      <Menu onSubmitHandler={handleMenuSubmit} itemsOnPage={itemsOnPage}></Menu>
+      <Content query={searchQuery} itemsOnPage={itemsOnPage}></Content>
       <Outlet />
     </main>
   );

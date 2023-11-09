@@ -11,11 +11,20 @@ const getSearchQueryFromLS = () => {
   return localStorage.getItem(COMMON_DATA.localStorageQuery) || '';
 };
 
-const setSearchQueryFromLS = (itemsOnPage: number) => {
+const setSearchQueryToLS = (searchQuery: string) => {
+  localStorage.setItem(COMMON_DATA.localStorageQuery, searchQuery || '');
+};
+
+const setItemsOnPageToLS = (itemsOnPage: number) => {
   localStorage.setItem(
     COMMON_DATA.localStorageItemsOnPage,
     itemsOnPage.toString() || COMMON_DATA.defaultItemsOnPage.toString()
   );
 };
 
-export { getSearchQueryFromLS, getItemsOnPageFromLS, setSearchQueryFromLS };
+export {
+  getSearchQueryFromLS,
+  getItemsOnPageFromLS,
+  setSearchQueryToLS,
+  setItemsOnPageToLS,
+};

@@ -6,6 +6,7 @@ import { fetchPage } from '../API/fetchRandM';
 import { Card } from './Card';
 import { Spinner } from './misc/Spinner';
 import { Pagination } from './ui/Pagination';
+import { setSearchQueryToLS } from '../utils/localStorage/localStorage';
 
 interface ContentProps {
   query: string;
@@ -48,7 +49,7 @@ const Content: FC<ContentProps> = ({ query, itemsOnPage }) => {
       numOfPages.current = Math.ceil((data.info?.count || 0) / itemsOnPage);
 
       if (numOfPages.current !== 0) {
-        localStorage.setItem(COMMON_DATA.localStorageQuery, query);
+        setSearchQueryToLS(query);
       }
 
       setIsLoading(false);
@@ -67,6 +68,7 @@ const Content: FC<ContentProps> = ({ query, itemsOnPage }) => {
   if (isLoading) return <Spinner />;
 
   if (!content) return <div>{COMMON_DATA.notFound}</div>;
+
   return (
     <>
       <div className="flex flex-col items-center gap-4">
