@@ -1,6 +1,5 @@
 import { FC, useEffect } from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
-import { getItemsOnPageFromLS } from '../utils/localStorage/localStorage';
 import { COMMON_DATA, ERROR_DATA } from '../data/data';
 import { Content } from './Content';
 import { Menu } from './Menu';
@@ -8,7 +7,7 @@ import { Menu } from './Menu';
 const Main: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const itemsOnPage = getItemsOnPageFromLS();
+  // const itemsOnPage = getItemsOnPageFromLS();
 
   useEffect(() => {
     const currentQuery = Number(
@@ -25,8 +24,8 @@ const Main: FC = () => {
 
   return (
     <main className="py-4 px-5 bg-slate-300">
-      <Menu itemsOnPage={itemsOnPage}></Menu>
-      <Content itemsOnPage={itemsOnPage}></Content>
+      <Menu></Menu>
+      <Content></Content>
       <Outlet />
     </main>
   );

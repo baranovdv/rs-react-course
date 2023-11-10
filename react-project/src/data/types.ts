@@ -37,3 +37,8 @@ export type SelectData = {
   selectLabel: string;
   selectOptions: number[];
 };
+
+export type ActionType =
+  | 'change_items_on_page'
+  | 'submit_search_query'
+  | 'update_content';

@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { COMMON_DATA, ERROR_DATA, NUM_OF_API_ITEMS } from '../data/data';
 import { ResponseData } from '../data/types';
@@ -7,20 +7,16 @@ import { Card } from './Card';
 import { Spinner } from './misc/Spinner';
 import { Pagination } from './ui/Pagination';
 import { setSearchQueryToLS } from '../utils/localStorage/localStorage';
-import { SearchQueryContext } from '../context/SearchQueryContext';
-import { ContentContext } from '../context/ContentContext';
+import { useStore, useStoreDispatch } from '../context/StoreContext';
 
-interface ContentProps {
-  itemsOnPage: number;
-}
-
-const Content: FC<ContentProps> = ({ itemsOnPage }) => {
+const Content: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
 
-  const { searchQuery } = useContext(SearchQueryContext);
-  const { content, updateContent } = useContext(ContentContext);
+  const store = useStore();
+
+  const dispatch = useStoreDispatch();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -36,7 +32,7 @@ const Content: FC<ContentProps> = ({ itemsOnPage }) => {
   };
 
   useEffect(() => {
-    const pageNum = Math.ceil((page * itemsOnPage) / NUM_OF_API_ITEMS);
+    const pageNum = Math.ceil((page * store.itemsOnPage) / NUM_OF_API_ITEMS);
 
     async function fetchPageData(
       query: string,
@@ -45,11 +41,17 @@ const Content: FC<ContentProps> = ({ itemsOnPage }) => {
       const data: ResponseData = await fetchPage({ query, pageNum });
 
       const slice =
-        ((page - 1) % (NUM_OF_API_ITEMS / itemsOnPage)) * itemsOnPage;
+        ((page - 1) % (NUM_OF_API_ITEMS / store.itemsOnPage)) *
+        store.itemsOnPage;
 
-      updateContent(data.results?.slice(slice, slice + itemsOnPage) || null);
+      dispatch({
+        type: 'update_content',
+        content: data.results?.slice(slice, slice + store.itemsOnPage) || null,
+      });
 
-      numOfPages.current = Math.ceil((data.info?.count || 0) / itemsOnPage);
+      numOfPages.current = Math.ceil(
+        (data.info?.count || 0) / store.itemsOnPage
+      );
 
       if (numOfPages.current !== 0) {
         setSearchQueryToLS(query);
@@ -59,10 +61,11 @@ const Content: FC<ContentProps> = ({ itemsOnPage }) => {
     }
 
     setIsLoading(true);
-    fetchPageData(searchQuery, pageNum).catch((error: Error) => {
+
+    fetchPageData(store.searchQuery, pageNum).catch((error: Error) => {
       throw new Error(error.message);
     });
-  }, [searchQuery, page, itemsOnPage]);
+  }, [store.searchQuery, page, store.itemsOnPage]);
 
   const handleCardDetailsClick = (id: number) => {
     navigate(`details/${id}?page=${page.toString()}`);
@@ -70,7 +73,7 @@ const Content: FC<ContentProps> = ({ itemsOnPage }) => {
 
   if (isLoading) return <Spinner />;
 
-  if (!content) return <div>{COMMON_DATA.notFound}</div>;
+  if (!store.content) return <div>{COMMON_DATA.notFound}</div>;
 
   return (
     <>
@@ -81,7 +84,7 @@ const Content: FC<ContentProps> = ({ itemsOnPage }) => {
           numOfPages={numOfPages.current}
         />
         <div className="mx-5 flex flex-wrap justify-around gap-4">
-          {content.map((card) => {
+          {store.content.map((card) => {
             return (
               <Card
                 data={card}

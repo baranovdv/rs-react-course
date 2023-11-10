@@ -5,8 +5,7 @@ import App from './App';
 import { Aside } from './components/Aside';
 import { ErrorPage } from './components/ErrorPage';
 import { Main } from './components/Main';
-import { ContentState } from './context/ContentContext';
-import { SearchQueryState } from './context/SearchQueryContext';
+import { StoreProvider } from './context/StoreContext';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -31,10 +30,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <SearchQueryState>
-      <ContentState>
-        <RouterProvider router={router} />
-      </ContentState>
-    </SearchQueryState>
+    <StoreProvider>
+      <RouterProvider router={router} />
+    </StoreProvider>
   </React.StrictMode>
 );

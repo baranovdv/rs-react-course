@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   getSearchQueryFromLS,
@@ -8,18 +8,16 @@ import { COMMON_DATA, MENU_DATA } from '../data/data';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 import { Select } from './ui/Select';
-import { SearchQueryContext } from '../context/SearchQueryContext';
+import { useStore, useStoreDispatch } from '../context/StoreContext';
 
-interface MenuProps {
-  itemsOnPage: number;
-}
-
-const Menu: FC<MenuProps> = ({ itemsOnPage }) => {
+const Menu: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [searchInput, setSearchInput] = useState<string>('');
 
-  const { updateSearchQuery } = useContext(SearchQueryContext);
+  const store = useStore();
+
+  const dispatch = useStoreDispatch();
 
   useEffect(() => {
     setSearchInput(getSearchQueryFromLS());
@@ -31,14 +29,18 @@ const Menu: FC<MenuProps> = ({ itemsOnPage }) => {
     event.preventDefault();
     searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
     setSearchParams(searchParams);
-    updateSearchQuery(searchInput);
+
+    dispatch({
+      type: 'submit_search_query',
+      searchQuery: searchInput,
+    });
   };
 
   const handleSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
-    itemsOnPage = Number(event.target.value);
-    setItemsOnPageToLS(itemsOnPage);
+    store.itemsOnPage = Number(event.target.value);
+    setItemsOnPageToLS(store.itemsOnPage);
 
     searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
     setSearchParams(searchParams);
@@ -62,7 +64,7 @@ const Menu: FC<MenuProps> = ({ itemsOnPage }) => {
         </form>
         <Select
           data={MENU_DATA}
-          selected={itemsOnPage}
+          selected={store.itemsOnPage}
           onSelect={handleSelectChange}
         />
       </div>
