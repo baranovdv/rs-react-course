@@ -1,25 +1,28 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { COMMON_DATA, ERROR_DATA, NUM_OF_API_ITEMS } from '../data/data';
-import { ResponseData, ResultData } from '../data/types';
+import { ResponseData } from '../data/types';
 import { fetchPage } from '../API/fetchRandM';
 import { Card } from './Card';
 import { Spinner } from './misc/Spinner';
 import { Pagination } from './ui/Pagination';
 import { setSearchQueryToLS } from '../utils/localStorage/localStorage';
+import { SearchQueryContext } from '../context/SearchQueryContext';
+import { ContentContext } from '../context/ContentContext';
 
 interface ContentProps {
-  query: string;
   itemsOnPage: number;
 }
 
-const Content: FC<ContentProps> = ({ query, itemsOnPage }) => {
+const Content: FC<ContentProps> = ({ itemsOnPage }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
 
+  const { searchQuery } = useContext(SearchQueryContext);
+  const { content, updateContent } = useContext(ContentContext);
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [content, setContent] = useState<ResultData[] | null>(null);
 
   const numOfPages = useRef<number>(1);
 
@@ -44,7 +47,7 @@ const Content: FC<ContentProps> = ({ query, itemsOnPage }) => {
       const slice =
         ((page - 1) % (NUM_OF_API_ITEMS / itemsOnPage)) * itemsOnPage;
 
-      setContent(data.results?.slice(slice, slice + itemsOnPage) || null);
+      updateContent(data.results?.slice(slice, slice + itemsOnPage) || null);
 
       numOfPages.current = Math.ceil((data.info?.count || 0) / itemsOnPage);
 
@@ -56,10 +59,10 @@ const Content: FC<ContentProps> = ({ query, itemsOnPage }) => {
     }
 
     setIsLoading(true);
-    fetchPageData(query, pageNum).catch((error: Error) => {
+    fetchPageData(searchQuery, pageNum).catch((error: Error) => {
       throw new Error(error.message);
     });
-  }, [query, page, itemsOnPage]);
+  }, [searchQuery, page, itemsOnPage]);
 
   const handleCardDetailsClick = (id: number) => {
     navigate(`details/${id}?page=${page.toString()}`);

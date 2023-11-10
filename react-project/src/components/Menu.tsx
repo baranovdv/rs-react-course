@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   getSearchQueryFromLS,
@@ -8,16 +8,18 @@ import { COMMON_DATA, MENU_DATA } from '../data/data';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 import { Select } from './ui/Select';
+import { SearchQueryContext } from '../context/SearchQueryContext';
 
 interface MenuProps {
-  onSubmitHandler: (searchInput: string) => void;
   itemsOnPage: number;
 }
 
-const Menu: FC<MenuProps> = ({ onSubmitHandler, itemsOnPage }) => {
+const Menu: FC<MenuProps> = ({ itemsOnPage }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [searchInput, setSearchInput] = useState<string>('');
+
+  const { updateSearchQuery } = useContext(SearchQueryContext);
 
   useEffect(() => {
     setSearchInput(getSearchQueryFromLS());
@@ -27,7 +29,9 @@ const Menu: FC<MenuProps> = ({ onSubmitHandler, itemsOnPage }) => {
     event: React.FormEvent<HTMLElement>
   ): void => {
     event.preventDefault();
-    onSubmitHandler(searchInput);
+    searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
+    setSearchParams(searchParams);
+    updateSearchQuery(searchInput);
   };
 
   const handleSelectChange = (

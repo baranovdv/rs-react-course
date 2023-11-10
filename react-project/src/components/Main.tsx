@@ -1,9 +1,6 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
-import {
-  getItemsOnPageFromLS,
-  getSearchQueryFromLS,
-} from '../utils/localStorage/localStorage';
+import { getItemsOnPageFromLS } from '../utils/localStorage/localStorage';
 import { COMMON_DATA, ERROR_DATA } from '../data/data';
 import { Content } from './Content';
 import { Menu } from './Menu';
@@ -11,17 +8,7 @@ import { Menu } from './Menu';
 const Main: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [searchQuery, setSearchQuery] = useState<string>(
-    getSearchQueryFromLS()
-  );
-
   const itemsOnPage = getItemsOnPageFromLS();
-
-  const handleMenuSubmit = (searchInput: string) => {
-    searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
-    setSearchParams(searchParams);
-    setSearchQuery(searchInput);
-  };
 
   useEffect(() => {
     const currentQuery = Number(
@@ -38,8 +25,8 @@ const Main: FC = () => {
 
   return (
     <main className="py-4 px-5 bg-slate-300">
-      <Menu onSubmitHandler={handleMenuSubmit} itemsOnPage={itemsOnPage}></Menu>
-      <Content query={searchQuery} itemsOnPage={itemsOnPage}></Content>
+      <Menu itemsOnPage={itemsOnPage}></Menu>
+      <Content itemsOnPage={itemsOnPage}></Content>
       <Outlet />
     </main>
   );
