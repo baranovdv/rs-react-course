@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from 'react';
-import { Action, Store } from 'src/data/interfaces';
+import { Action, Store } from '../data/interfaces';
 import { initialStore } from './initialStore';
 import { storeReducer } from './storeReducer';
 
@@ -36,4 +36,4 @@ const useStoreDispatch = () => {
   return context;
 };
 
-export { StoreProvider, useStore, useStoreDispatch };
+export { StoreProvider, useStore, useStoreDispatch, StoreContext };

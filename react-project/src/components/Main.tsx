@@ -24,8 +24,8 @@ const Main: FC = () => {
 
   return (
     <main className="py-4 px-5 bg-slate-300">
-      <Menu></Menu>
-      <Content></Content>
+      <Menu />
+      <Content />
       <Outlet />
     </main>
   );
