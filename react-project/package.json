@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "format:fix": "prettier . --write",
     "prepare": "cd .. && husky install react-project/.husky",
-    "test": "vitest --reporter=verbose",
+    "test": "vitest run --reporter=verbose --coverage",
     "husky-test": "vitest run",
     "coverage": "vitest run --coverage"
   },
