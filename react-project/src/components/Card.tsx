@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { CARD_DATA } from '../data/data';
+import { CARD_DATA, TEST_DATA } from '../data/data';
 import { ResultData } from '../data/types';
 import { Button } from './ui/Button';
 
@@ -13,7 +13,7 @@ const Card: FC<CardProps> = ({ data, onDetailsClick }) => {
 
   return (
     <div
-      data-testid="card-item"
+      data-testid={TEST_DATA.CARD}
       className="flex flex-col gap-1 p-6 items-center w-[320px] rounded-[5%] bg-[rgba(255,255,255,0.3)] text-[rgba(71,71,71)]"
     >
       <img className="w-[40%] rounded-[50%] m-2" src={image} alt="image" />

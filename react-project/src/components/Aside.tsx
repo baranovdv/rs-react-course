@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { TEST_DATA } from '../data/data';
 import { fetchDetails } from '../API/fetchRandM';
 import { ResultData } from '../data/types';
 import { Details } from './Details';
@@ -52,7 +53,10 @@ const Aside = () => {
         )}
       </aside>
       <div className="fixed top-5 right-5 z-20">
-        <Button onClick={handleAsideClose} testId="aside-button-close">
+        <Button
+          onClick={handleAsideClose}
+          testId={TEST_DATA.ASIDE_BUTTON_CLOSE}
+        >
           X
         </Button>
       </div>

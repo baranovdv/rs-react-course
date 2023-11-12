@@ -4,7 +4,7 @@ import { Content } from '../components/Content';
 import { BrowserRouter } from 'react-router-dom';
 import { StoreContext, StoreProvider } from '../context/StoreContext';
 import { mockData, storeDataNotFound } from '../mocks/mockData';
-import { COMMON_DATA } from '../data/data';
+import { COMMON_DATA, TEST_DATA } from '../data/data';
 
 describe('Content', () => {
   it('renders specified number of cards', async () => {
@@ -15,8 +15,8 @@ describe('Content', () => {
         </BrowserRouter>
       </StoreProvider>
     );
-    await screen.findAllByTestId('spinner');
-    const content = await screen.findAllByTestId('card-item');
+    await screen.findAllByTestId(TEST_DATA.SPINNER);
+    const content = await screen.findAllByTestId(TEST_DATA.CARD);
     expect(content).toHaveLength(mockData.results.length);
   });
   it('if no cards are present', async () => {
@@ -29,7 +29,7 @@ describe('Content', () => {
         </StoreContext.Provider>
       </StoreProvider>
     );
-    await screen.findByTestId('spinner');
+    await screen.findByTestId(TEST_DATA.SPINNER);
     const content = await screen.findByText(COMMON_DATA.notFound);
     expect(content).toBeInTheDocument();
   });
@@ -41,8 +41,8 @@ describe('Content', () => {
         </BrowserRouter>
       </StoreProvider>
     );
-    await screen.findByTestId('spinner');
-    const card = await screen.findAllByTestId('card-item');
+    await screen.findByTestId(TEST_DATA.SPINNER);
+    const card = await screen.findAllByTestId(TEST_DATA.CARD);
 
     for (let i = 0; i < mockData.results.length; i++) {
       const cardImg = card[i].getElementsByTagName('img');

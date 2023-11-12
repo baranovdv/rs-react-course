@@ -5,7 +5,7 @@ import { Content } from '../components/Content';
 import { MemoryRouter } from 'react-router-dom';
 import { StoreProvider } from '../context/StoreContext';
 import { useState } from 'react';
-import { COMMON_DATA } from '../data/data';
+import { COMMON_DATA, TEST_DATA } from '../data/data';
 
 let searchParamsMock = '';
 
@@ -52,20 +52,20 @@ describe('Pagination', () => {
         </MemoryRouter>
       </StoreProvider>
     );
-    await screen.findAllByTestId('spinner');
-    let nextPage = await screen.findAllByTestId('button-next-page');
+    await screen.findAllByTestId(TEST_DATA.SPINNER);
+    let nextPage = await screen.findAllByTestId(TEST_DATA.NEXT_PAGE);
     let currentPage = Number(searchParamsMock);
 
     fireEvent.click(nextPage[0]);
     currentPage = currentPage + 1;
     expect(Number(searchParamsMock)).toBe(currentPage);
 
-    nextPage = await screen.findAllByTestId('button-next-page');
+    nextPage = await screen.findAllByTestId(TEST_DATA.NEXT_PAGE);
     fireEvent.click(nextPage[0]);
     currentPage = currentPage + 1;
     expect(Number(searchParamsMock)).toBe(currentPage);
 
-    const prevPage = await screen.findAllByTestId('button-prev-page');
+    const prevPage = await screen.findAllByTestId(TEST_DATA.PREV_PAGE);
     fireEvent.click(prevPage[0]);
     currentPage = currentPage - 1;
     expect(Number(searchParamsMock)).toBe(currentPage);

@@ -7,6 +7,7 @@ import {
   getSearchQueryFromLS,
   setSearchQueryToLS,
 } from '../utils/localStorage/localStorage';
+import { TEST_DATA } from '../data/data';
 
 const SEARCH_QUERY_TEST = 'testQuery';
 
@@ -23,16 +24,17 @@ describe('Search', () => {
         </MemoryRouter>
       </StoreProvider>
     );
-    await screen.findAllByTestId('spinner');
+    await screen.findAllByTestId(TEST_DATA.SPINNER);
 
-    const searchInput: HTMLInputElement =
-      await screen.findByTestId('search-input-item');
-    const searchButton = await screen.findByTestId('search-button-submit');
+    const searchInput: HTMLInputElement = await screen.findByTestId(
+      TEST_DATA.SEARCH_INPUT
+    );
+    const searchButton = await screen.findByTestId(TEST_DATA.SEARCH_SUBMIT);
 
     fireEvent.change(searchInput, { target: { value: SEARCH_QUERY_TEST } });
     fireEvent.click(searchButton);
 
-    await screen.findAllByTestId('spinner');
+    await screen.findAllByTestId(TEST_DATA.SPINNER);
 
     expect(getSearchQueryFromLS()).toEqual(SEARCH_QUERY_TEST);
   });
@@ -45,10 +47,11 @@ describe('Search', () => {
         </MemoryRouter>
       </StoreProvider>
     );
-    await screen.findAllByTestId('spinner');
+    await screen.findAllByTestId(TEST_DATA.SPINNER);
 
-    const searchInput: HTMLInputElement =
-      await screen.findByTestId('search-input-item');
+    const searchInput: HTMLInputElement = await screen.findByTestId(
+      TEST_DATA.SEARCH_INPUT
+    );
 
     expect(searchInput.value).toEqual(SEARCH_QUERY_TEST);
   });

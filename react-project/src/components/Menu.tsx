@@ -4,7 +4,7 @@ import {
   getSearchQueryFromLS,
   setItemsOnPageToLS,
 } from '../utils/localStorage/localStorage';
-import { COMMON_DATA, MENU_DATA } from '../data/data';
+import { COMMON_DATA, MENU_DATA, TEST_DATA } from '../data/data';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 import { Select } from './ui/Select';
@@ -59,10 +59,10 @@ const Menu: FC = () => {
               setSearchInput(event.target.value)
             }
             label={COMMON_DATA.inputLabel}
-            testId="search-input-item"
+            testId={TEST_DATA.SEARCH_INPUT}
           />
           <Button
-            testId="search-button-submit"
+            testId={TEST_DATA.SEARCH_SUBMIT}
             onClick={handleSearchFormSubmit}
           >
             Search

@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { TEST_DATA } from '../data/data';
 import { ResultData } from '../data/types';
 
 interface DetailsProps {
@@ -11,7 +12,7 @@ const Details: FC<DetailsProps> = ({ data }) => {
 
   return (
     <div
-      data-testid="details-item"
+      data-testid={TEST_DATA.DETAILS}
       className="flex flex-col gap-2 mt-5 p-6 items-center w-full rounded-[5%] bg-[rgba(255,255,255,0.3)] text-[rgba(71,71,71)]"
     >
       <img className="w-[60%] rounded-[50%] m-2" src={image} alt="image" />

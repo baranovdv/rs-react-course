@@ -28,3 +28,14 @@ export const ERROR_DATA = {
   htmlMessage: 'Something went wrong. Please try again later.',
   pageError: 0,
 };
+
+export const TEST_DATA = {
+  SPINNER: 'spinner',
+  CARD: 'card-item',
+  DETAILS: 'details-item',
+  ASIDE_BUTTON_CLOSE: 'aside-button-close',
+  NEXT_PAGE: 'button-next-page',
+  PREV_PAGE: 'button-prev-page',
+  SEARCH_INPUT: 'search-input-item',
+  SEARCH_SUBMIT: 'search-button-submit',
+};

@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { TEST_DATA } from '../../data/data';
 import { Button } from './Button';
 
 interface PaginationProps {
@@ -28,7 +29,7 @@ const Pagination: FC<PaginationProps> = ({
       <Button
         onClick={handlePageBack}
         disabled={isFirstPage}
-        testId="button-prev-page"
+        testId={TEST_DATA.PREV_PAGE}
       >
         &lt;
       </Button>
@@ -38,7 +39,7 @@ const Pagination: FC<PaginationProps> = ({
       <Button
         onClick={handlePageForward}
         disabled={isLastPage}
-        testId="button-next-page"
+        testId={TEST_DATA.NEXT_PAGE}
       >
         &gt;
       </Button>
