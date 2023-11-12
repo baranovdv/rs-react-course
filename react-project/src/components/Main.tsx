@@ -7,8 +7,6 @@ import { Menu } from './Menu';
 const Main: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // const itemsOnPage = getItemsOnPageFromLS();
-
   useEffect(() => {
     const currentQuery = Number(
       searchParams.get(COMMON_DATA.pageURLQuery) || ERROR_DATA.pageError
