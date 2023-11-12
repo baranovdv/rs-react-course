@@ -59,8 +59,14 @@ const Menu: FC = () => {
               setSearchInput(event.target.value)
             }
             label={COMMON_DATA.inputLabel}
+            testId="search-input-item"
           />
-          <Button onClick={handleSearchFormSubmit}>Search</Button>
+          <Button
+            testId="search-button-submit"
+            onClick={handleSearchFormSubmit}
+          >
+            Search
+          </Button>
         </form>
         <Select
           data={MENU_DATA}
