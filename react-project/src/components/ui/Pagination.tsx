@@ -25,13 +25,21 @@ const Pagination: FC<PaginationProps> = ({
 
   return (
     <div className="flex justify-center gap-2">
-      <Button onClick={handlePageBack} disabled={isFirstPage}>
+      <Button
+        onClick={handlePageBack}
+        disabled={isFirstPage}
+        testId="button-prev-page"
+      >
         &lt;
       </Button>
       <div className="px-4 py-2 rounded-full border-2 border-red-800 bg-red-100">
         {page}
       </div>
-      <Button onClick={handlePageForward} disabled={isLastPage}>
+      <Button
+        onClick={handlePageForward}
+        disabled={isLastPage}
+        testId="button-next-page"
+      >
         &gt;
       </Button>
     </div>
