@@ -11,6 +11,7 @@
     "format:fix": "prettier . --write",
     "prepare": "cd .. && husky install react-project/.husky",
     "test": "vitest --reporter=verbose",
+    "husky-test": "vitest run",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
