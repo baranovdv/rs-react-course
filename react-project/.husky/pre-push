@@ -2,5 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 cd react-project
-npx lint-staged
-
+npm run husky-test
