@@ -1,22 +1,17 @@
 import { describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { StoreProvider } from '../context/StoreContext';
-import { Main } from '../components/Main';
-import { Aside } from '../components/Aside';
 import { clearIsAPICalled, isAPICalled } from '../mocks/handlers';
 import { TEST_DATA } from '../data/data';
+import { routerConfig } from '../router/router';
 
 describe('Card', () => {
   it('clicking on a card opens a detailed card component', async () => {
+    const router = createMemoryRouter(routerConfig);
     render(
       <StoreProvider>
-        <MemoryRouter>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/details/:id" element={<Aside />} />
-          </Routes>
-        </MemoryRouter>
+        <RouterProvider router={router} />
       </StoreProvider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
@@ -33,14 +28,10 @@ describe('Card', () => {
     expect(details).toBeInTheDocument();
   });
   it('clicking triggers an additional API call to fetch detailed information', async () => {
+    const router = createMemoryRouter(routerConfig);
     render(
       <StoreProvider>
-        <MemoryRouter>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/details/:id" element={<Aside />} />
-          </Routes>
-        </MemoryRouter>
+        <RouterProvider router={router} />
       </StoreProvider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);

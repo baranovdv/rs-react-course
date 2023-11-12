@@ -1,22 +1,17 @@
 import { describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { StoreProvider } from '../context/StoreContext';
-import { Main } from '../components/Main';
-import { Aside } from '../components/Aside';
 import { mockData } from '../mocks/mockData';
 import { TEST_DATA } from '../data/data';
+import { routerConfig } from '../router/router';
 
 describe('Detailed Card', () => {
   it('loading indicator is displayed while fetching data', async () => {
+    const router = createMemoryRouter(routerConfig);
     render(
       <StoreProvider>
-        <MemoryRouter>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/details/:id" element={<Aside />} />
-          </Routes>
-        </MemoryRouter>
+        <RouterProvider router={router} />
       </StoreProvider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
@@ -31,14 +26,10 @@ describe('Detailed Card', () => {
     expect(spinner).toBeInTheDocument();
   });
   it('detailed card component correctly displays the detailed card data', async () => {
+    const router = createMemoryRouter(routerConfig);
     render(
       <StoreProvider>
-        <MemoryRouter>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/details/:id" element={<Aside />} />
-          </Routes>
-        </MemoryRouter>
+        <RouterProvider router={router} />
       </StoreProvider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
@@ -82,14 +73,10 @@ describe('Detailed Card', () => {
     );
   });
   it('clicking the close button hides the component', async () => {
+    const router = createMemoryRouter(routerConfig);
     render(
       <StoreProvider>
-        <MemoryRouter>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/details/:id" element={<Aside />} />
-          </Routes>
-        </MemoryRouter>
+        <RouterProvider router={router} />
       </StoreProvider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);

@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "format:fix": "prettier . --write",
     "prepare": "cd .. && husky install react-project/.husky",
-    "test": "vitest"
+    "test": "vitest --reporter=verbose"
   },
   "dependencies": {
     "react": "^18.2.0",
