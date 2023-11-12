@@ -69,6 +69,11 @@ const mockData = {
       created: '2017-11-04T19:09:56.428Z',
     },
   ],
+  error: '',
+};
+
+const mockNotFound = {
+  error: 'There is nothing here',
 };
 
 const storeDataNotFound: Store = {
@@ -77,4 +82,4 @@ const storeDataNotFound: Store = {
   content: null,
 };
 
-export { mockData, storeDataNotFound };
+export { mockData, storeDataNotFound, mockNotFound };
