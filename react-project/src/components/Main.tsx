@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useEffect } from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import { COMMON_DATA, ERROR_DATA } from '../data/data';
