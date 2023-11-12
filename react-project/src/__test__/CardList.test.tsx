@@ -29,8 +29,42 @@ describe('Content', () => {
         </StoreContext.Provider>
       </StoreProvider>
     );
-    await screen.findAllByTestId('spinner');
+    await screen.findByTestId('spinner');
     const content = await screen.findByText(COMMON_DATA.notFound);
     expect(content).toBeInTheDocument();
+  });
+  it('card component renders the relevant card data', async () => {
+    render(
+      <StoreProvider>
+        <BrowserRouter>
+          <Content />
+        </BrowserRouter>
+      </StoreProvider>
+    );
+    await screen.findByTestId('spinner');
+    const card = await screen.findAllByTestId('card-item');
+
+    for (let i = 0; i < mockData.results.length; i++) {
+      const cardImg = card[i].getElementsByTagName('img');
+      expect(cardImg[0].src).toBe(mockData.results[i].image);
+
+      const cardName = card[i].getElementsByTagName('h2');
+      expect(cardName[0].textContent).toBe(mockData.results[i].name);
+
+      const cardInfo = card[i].getElementsByTagName('h3');
+
+      expect(cardInfo[0].textContent?.split(' ')[1]).toBe(
+        mockData.results[0].species
+      );
+      expect(cardInfo[1].textContent?.split(' ')[1]).toBe(
+        mockData.results[i].gender
+      );
+      expect(cardInfo[2].textContent?.split(' ')[1]).toBe(
+        mockData.results[i].status
+      );
+      expect(cardInfo[3].textContent?.split(' ')[1]).toBe(
+        mockData.results[i].origin.name.split(' ')[0]
+      );
+    }
   });
 });
