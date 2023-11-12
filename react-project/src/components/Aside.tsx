@@ -52,7 +52,9 @@ const Aside = () => {
         )}
       </aside>
       <div className="fixed top-5 right-5 z-20">
-        <Button onClick={handleAsideClose}>X</Button>
+        <Button onClick={handleAsideClose} testId="aside-button-close">
+          X
+        </Button>
       </div>
     </>
   );
