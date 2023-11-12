@@ -1,10 +1,9 @@
-import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 import { Aside } from '../components/Aside';
 import { ErrorPage } from '../components/ErrorPage';
 import { Main } from '../components/Main';
 
-const router = createBrowserRouter([
+const routerConfig = [
   {
     path: '/',
     element: <App />,
@@ -22,6 +21,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+];
 
-export { router };
+export { routerConfig };
