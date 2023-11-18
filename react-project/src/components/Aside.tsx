@@ -8,7 +8,10 @@ import { useGetCardByIdQuery } from '../API/rickAndMortyAPI';
 import { ErrorResponse } from '../data/types';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../store/hooks';
-import { removeCardsIsLoading, setCardsIsLoading } from '../store/cardsSlice';
+import {
+  removeDetailsIsLoading,
+  setDetailsIsLoading,
+} from '../store/cardsSlice';
 
 const Aside = () => {
   const dispatch = useAppDispatch();
@@ -26,9 +29,9 @@ const Aside = () => {
 
   useEffect(() => {
     if (isLoading || isFetching) {
-      dispatch(setCardsIsLoading());
+      dispatch(setDetailsIsLoading());
     } else {
-      dispatch(removeCardsIsLoading());
+      dispatch(removeDetailsIsLoading());
     }
   }, [isLoading, isFetching]);
 
