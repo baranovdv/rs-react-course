@@ -1,7 +1,7 @@
 import { afterAll, describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { StoreProvider } from '../context/StoreContext';
+import { StoreProvider } from '../store/StoreContext';
 import { Main } from '../components/Main';
 import {
   getSearchQueryFromLS,

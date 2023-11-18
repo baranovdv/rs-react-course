@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { StoreProvider } from '../context/StoreContext';
+import { StoreProvider } from '../store/StoreContext';
 import { mockData } from '../mocks/mockData';
 import { TEST_DATA } from '../data/data';
 import { routerConfig } from '../router/router';

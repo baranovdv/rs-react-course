@@ -8,16 +8,24 @@ import { Card } from './Card';
 import { Spinner } from './misc/Spinner';
 import { Pagination } from './ui/Pagination';
 import { setSearchQueryToLS } from '../utils/localStorage/localStorage';
-import { useStore, useStoreDispatch } from '../context/StoreContext';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import {
+  selectCards,
+  selectItemsOnPage,
+  selectSearchQuery,
+  setCards,
+} from '../store/cardsSlice';
 
 const Content: FC = () => {
+  const itemsOnPage = useAppSelector(selectItemsOnPage);
+  const searchQuery = useAppSelector(selectSearchQuery);
+  const content = useAppSelector(selectCards);
+
+  const dispatch = useAppDispatch();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
-
-  const store = useStore();
-
-  const dispatch = useStoreDispatch();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -33,7 +41,7 @@ const Content: FC = () => {
   };
 
   useEffect(() => {
-    const pageNum = Math.ceil((page * store.itemsOnPage) / NUM_OF_API_ITEMS);
+    const pageNum = Math.ceil((page * itemsOnPage) / NUM_OF_API_ITEMS);
 
     async function fetchPageData(
       query: string,
@@ -42,17 +50,13 @@ const Content: FC = () => {
       const data: ResponseData = await fetchPage({ query, pageNum });
 
       const slice =
-        ((page - 1) % (NUM_OF_API_ITEMS / store.itemsOnPage)) *
-        store.itemsOnPage;
+        ((page - 1) % (NUM_OF_API_ITEMS / itemsOnPage)) * itemsOnPage;
 
-      dispatch({
-        type: 'update_content',
-        content: data.results?.slice(slice, slice + store.itemsOnPage) || null,
-      });
-
-      numOfPages.current = Math.ceil(
-        (data.info?.count || 0) / store.itemsOnPage
+      dispatch(
+        setCards(data.results?.slice(slice, slice + itemsOnPage) || null)
       );
+
+      numOfPages.current = Math.ceil((data.info?.count || 0) / itemsOnPage);
 
       if (numOfPages.current !== 0) {
         setSearchQueryToLS(query);
@@ -63,10 +67,10 @@ const Content: FC = () => {
 
     setIsLoading(true);
 
-    fetchPageData(store.searchQuery, pageNum).catch((error: Error) => {
+    fetchPageData(searchQuery, pageNum).catch((error: Error) => {
       throw new Error(error.message);
     });
-  }, [store.searchQuery, page, store.itemsOnPage]);
+  }, [searchQuery, page, itemsOnPage]);
 
   const handleCardDetailsClick = (id: number) => {
     navigate(`details/${id}?page=${page.toString()}`);
@@ -74,7 +78,7 @@ const Content: FC = () => {
 
   if (isLoading) return <Spinner />;
 
-  if (!store.content) return <div>{COMMON_DATA.notFound}</div>;
+  if (!content) return <div>{COMMON_DATA.notFound}</div>;
 
   return (
     <>
@@ -85,7 +89,7 @@ const Content: FC = () => {
           numOfPages={numOfPages.current}
         />
         <div className="mx-5 flex flex-wrap justify-around gap-4">
-          {store.content.map((card) => {
+          {content.map((card) => {
             return (
               <Card
                 data={card}

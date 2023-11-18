@@ -3,7 +3,7 @@ import * as reactRouterDom from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Content } from '../components/Content';
 import { MemoryRouter } from 'react-router-dom';
-import { StoreProvider } from '../context/StoreContext';
+import { StoreProvider } from '../store/StoreContext';
 import { useState } from 'react';
 import { COMMON_DATA, TEST_DATA } from '../data/data';
 

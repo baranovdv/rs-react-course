@@ -15,10 +15,10 @@ const setSearchQueryToLS = (searchQuery: string) => {
   localStorage.setItem(COMMON_DATA.localStorageQuery, searchQuery || '');
 };
 
-const setItemsOnPageToLS = (itemsOnPage: number) => {
+const setItemsOnPageToLS = (itemsOnPage: string) => {
   localStorage.setItem(
     COMMON_DATA.localStorageItemsOnPage,
-    itemsOnPage.toString() || COMMON_DATA.defaultItemsOnPage.toString()
+    itemsOnPage || COMMON_DATA.defaultItemsOnPage.toString()
   );
 };
 

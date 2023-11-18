@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Content } from '../components/Content';
 import { BrowserRouter } from 'react-router-dom';
-import { StoreContext, StoreProvider } from '../context/StoreContext';
+import { StoreContext, StoreProvider } from '../store/StoreContext';
 import { mockData, storeDataNotFound } from '../mocks/mockData';
 import { COMMON_DATA, TEST_DATA } from '../data/data';
 

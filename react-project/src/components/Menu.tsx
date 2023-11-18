@@ -8,16 +8,21 @@ import { COMMON_DATA, MENU_DATA, TEST_DATA } from '../data/data';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 import { Select } from './ui/Select';
-import { useStore, useStoreDispatch } from '../context/StoreContext';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import {
+  selectItemsOnPage,
+  setItemsOnPage,
+  setSearchQuery,
+} from '../store/cardsSlice';
 
 const Menu: FC = () => {
+  const itemsOnPage = useAppSelector(selectItemsOnPage);
+
+  const dispatch = useAppDispatch();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [searchInput, setSearchInput] = useState<string>('');
-
-  const store = useStore();
-
-  const dispatch = useStoreDispatch();
 
   useEffect(() => {
     setSearchInput(getSearchQueryFromLS());
@@ -30,17 +35,14 @@ const Menu: FC = () => {
     searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
     setSearchParams(searchParams);
 
-    dispatch({
-      type: 'submit_search_query',
-      searchQuery: searchInput,
-    });
+    dispatch(setSearchQuery(searchInput));
   };
 
   const handleSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
-    store.itemsOnPage = Number(event.target.value);
-    setItemsOnPageToLS(store.itemsOnPage);
+    dispatch(setItemsOnPage(Number(event.target.value)));
+    setItemsOnPageToLS(event.target.value);
 
     searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
     setSearchParams(searchParams);
@@ -70,7 +72,7 @@ const Menu: FC = () => {
         </form>
         <Select
           data={MENU_DATA}
-          selected={store.itemsOnPage}
+          selected={itemsOnPage}
           onSelect={handleSelectChange}
         />
       </div>
