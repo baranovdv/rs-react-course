@@ -1,36 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { TEST_DATA } from '../data/data';
-import { fetchDetails } from '../API/fetchRandM';
-import { ResultData } from '../data/types';
 import { Details } from './Details';
 import { Spinner } from './misc/Spinner';
 import { Button } from './ui/Button';
+import { useGetCardByIdQuery } from '../API/rickAndMortyAPI';
+import { ErrorResponse } from 'src/data/types';
 
 const Aside = () => {
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const id = useParams().id || '0';
 
-  const content = useRef<ResultData | null>(null);
-
-  const id: number = Number(useParams().id) || 0;
-
-  useEffect(() => {
-    async function fetchData(id: number): Promise<void> {
-      const data: ResultData = await fetchDetails({ id });
-
-      content.current = data;
-
-      setIsLoading(false);
-    }
-
-    setIsLoading(true);
-
-    fetchData(id).catch((error: Error) => {
-      throw new Error(error.message);
-    });
-  }, [id]);
+  const { data, isLoading, isFetching, isSuccess, isError, error } =
+    useGetCardByIdQuery(id);
 
   const handleAsideClose = () => {
     navigate(-1);
@@ -44,12 +26,20 @@ const Aside = () => {
       ></div>
 
       <aside className="w-[320px] h-full fixed top-0 right-0 py-10 px-5 bg-white/95 z-20 lg:w-[30%]">
-        {isLoading ? (
+        {isLoading || isFetching ? (
           <div className="w-full h-full flex justify-center items-center">
             <Spinner />
           </div>
         ) : (
-          content.current && <Details data={content.current} />
+          isSuccess && data && <Details data={data} />
+        )}
+        {isError && (
+          <div className="m-10">
+            Error:
+            {` ${(error as ErrorResponse).status || 0}  ${
+              (error as ErrorResponse).data.error || ''
+            }`}
+          </div>
         )}
       </aside>
       <div className="fixed top-5 right-5 z-20">
