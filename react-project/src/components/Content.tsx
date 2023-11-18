@@ -52,15 +52,17 @@ const Content: FC = () => {
   };
 
   useEffect(() => {
-    if (isLoading || isFetching) {
-      dispatch(setCardsIsLoading());
-    } else {
+    if (isLoading || isFetching) dispatch(setCardsIsLoading());
+
+    if (isSuccess) {
+      dispatch(setCards(sliceData()));
       dispatch(removeCardsIsLoading());
     }
 
-    if (isSuccess) dispatch(setCards(sliceData()));
-
-    if (isError) dispatch(setCards(null));
+    if (isError) {
+      dispatch(setCards(null));
+      dispatch(removeCardsIsLoading());
+    }
   }, [isSuccess, isError, isLoading, isFetching]);
 
   if (isLoading) return <Spinner />;
