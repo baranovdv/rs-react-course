@@ -14,6 +14,8 @@ export interface Store {
   searchQuery: string;
   itemsOnPage: number;
   content: ResultData[] | null;
+  cardsIsLoading: boolean;
+  detailsIsLoading: boolean;
 }
 
 export interface Action {

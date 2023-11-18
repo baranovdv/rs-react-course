@@ -1,12 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate, useParams } from 'react-router';
 import { TEST_DATA } from '../data/data';
 import { Details } from './Details';
 import { Spinner } from './misc/Spinner';
 import { Button } from './ui/Button';
 import { useGetCardByIdQuery } from '../API/rickAndMortyAPI';
-import { ErrorResponse } from 'src/data/types';
+import { ErrorResponse } from '../data/types';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../store/hooks';
+import { removeCardsIsLoading, setCardsIsLoading } from '../store/cardsSlice';
 
 const Aside = () => {
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
 
   const id = useParams().id || '0';
@@ -17,6 +23,14 @@ const Aside = () => {
   const handleAsideClose = () => {
     navigate(-1);
   };
+
+  useEffect(() => {
+    if (isLoading || isFetching) {
+      dispatch(setCardsIsLoading());
+    } else {
+      dispatch(removeCardsIsLoading());
+    }
+  }, [isLoading, isFetching]);
 
   return (
     <>

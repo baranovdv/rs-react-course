@@ -12,6 +12,8 @@ const initialState: Store = {
   searchQuery: getSearchQueryFromLS() || '',
   itemsOnPage: getItemsOnPageFromLS() || COMMON_DATA.defaultItemsOnPage,
   content: null,
+  cardsIsLoading: false,
+  detailsIsLoading: false,
 };
 
 const cardsSlice = createSlice({
@@ -27,13 +29,39 @@ const cardsSlice = createSlice({
     setItemsOnPage: (state, action: PayloadAction<number>) => {
       state.itemsOnPage = action.payload || COMMON_DATA.defaultItemsOnPage;
     },
+    setCardsIsLoading: (state) => {
+      state.cardsIsLoading = true;
+    },
+    removeCardsIsLoading: (state) => {
+      state.cardsIsLoading = false;
+    },
+    setDetailsIsLoading: (state) => {
+      state.detailsIsLoading = true;
+    },
+    removeDetailsIsLoading: (state) => {
+      state.detailsIsLoading = false;
+    },
   },
 });
 
 const selectSearchQuery = (state: RootState) => state.cards.searchQuery;
 const selectCards = (state: RootState) => state.cards.content;
 const selectItemsOnPage = (state: RootState) => state.cards.itemsOnPage;
+const selectCardsIsLoading = (state: RootState) => state.cards.cardsIsLoading;
 
-export const { setSearchQuery, setCards, setItemsOnPage } = cardsSlice.actions;
-export { selectSearchQuery, selectCards, selectItemsOnPage };
+export const {
+  setSearchQuery,
+  setCards,
+  setItemsOnPage,
+  setCardsIsLoading,
+  removeCardsIsLoading,
+  setDetailsIsLoading,
+  removeDetailsIsLoading,
+} = cardsSlice.actions;
+export {
+  selectSearchQuery,
+  selectCards,
+  selectItemsOnPage,
+  selectCardsIsLoading,
+};
 export default cardsSlice.reducer;

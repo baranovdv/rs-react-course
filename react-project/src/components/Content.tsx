@@ -1,13 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { COMMON_DATA, ERROR_DATA, NUM_OF_API_ITEMS } from '../data/data';
 import { Card } from './Card';
 import { Spinner } from './misc/Spinner';
 import { Pagination } from './ui/Pagination';
 import { setSearchQueryToLS } from '../utils/localStorage/localStorage';
-import { useAppSelector } from '../store/hooks';
-import { selectItemsOnPage, selectSearchQuery } from '../store/cardsSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import {
+  removeCardsIsLoading,
+  selectItemsOnPage,
+  selectSearchQuery,
+  setCardsIsLoading,
+} from '../store/cardsSlice';
 import { useGetCardsQuery } from '../API/rickAndMortyAPI';
 import { ErrorResponse } from '../data/types';
 import { useCreateRequest } from '../utils/API/createRequest';
@@ -15,6 +20,8 @@ import { useCreateRequest } from '../utils/API/createRequest';
 const Content: FC = () => {
   const itemsOnPage = useAppSelector(selectItemsOnPage);
   const searchQuery = useAppSelector(selectSearchQuery);
+
+  const dispatch = useAppDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -27,19 +34,7 @@ const Content: FC = () => {
   const { data, isLoading, isSuccess, isError, isFetching, error } =
     useGetCardsQuery(useCreateRequest(page));
 
-  // useCreateRequest(page)
-
   const numOfPages = useRef<number>(1);
-
-  // function createRequest() {
-  //   const pageNum = Math.ceil((page * itemsOnPage) / NUM_OF_API_ITEMS);
-
-  //   const request = `?page=${pageNum}${
-  //     searchQuery !== undefined ? '&name=' + searchQuery : ''
-  //   }`;
-
-  //   return request;
-  // }
 
   const sliceData = () => {
     const slice = ((page - 1) % (NUM_OF_API_ITEMS / itemsOnPage)) * itemsOnPage;
@@ -51,52 +46,17 @@ const Content: FC = () => {
     setSearchParams(searchParams);
   };
 
-  // const slice = ((page - 1) % (NUM_OF_API_ITEMS / itemsOnPage)) * itemsOnPage;
-
-  // dispatch(setCards(data.results?.slice(slice, slice + itemsOnPage) || null));
-
-  // numOfPages.current = Math.ceil((data.info?.count || 0) / itemsOnPage);
-
-  // if (numOfPages.current !== 0) {
-  //   setSearchQueryToLS(searchQuery);
-  // }
-  // }
-
-  // useEffect(() => {
-  //   const pageNum = Math.ceil((page * itemsOnPage) / NUM_OF_API_ITEMS);
-
-  //   async function fetchPageData(
-  //     query: string,
-  //     pageNum: number
-  //   ): Promise<void> {
-  //     const data: ResponseData = await fetchPage({ query, pageNum });
-
-  //     const slice =
-  //       ((page - 1) % (NUM_OF_API_ITEMS / itemsOnPage)) * itemsOnPage;
-
-  //     dispatch(
-  //       setCards(data.results?.slice(slice, slice + itemsOnPage) || null)
-  //     );
-
-  //     numOfPages.current = Math.ceil((data.info?.count || 0) / itemsOnPage);
-
-  //     if (numOfPages.current !== 0) {
-  //       setSearchQueryToLS(query);
-  //     }
-
-  //     setIsLoading(false);
-  //   }
-
-  //   setIsLoading(true);
-
-  //   fetchPageData(searchQuery, pageNum).catch((error: Error) => {
-  //     throw new Error(error.message);
-  //   });
-  // }, [searchQuery, page, itemsOnPage]);
-
   const handleCardDetailsClick = (id: number) => {
     navigate(`details/${id}?page=${page.toString()}`);
   };
+
+  useEffect(() => {
+    if (isLoading || isFetching) {
+      dispatch(setCardsIsLoading());
+    } else {
+      dispatch(removeCardsIsLoading());
+    }
+  }, [isLoading, isFetching]);
 
   if (isLoading) return <Spinner />;
 
