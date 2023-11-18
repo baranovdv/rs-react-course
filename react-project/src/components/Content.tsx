@@ -11,6 +11,7 @@ import {
   removeCardsIsLoading,
   selectItemsOnPage,
   selectSearchQuery,
+  setCards,
   setCardsIsLoading,
 } from '../store/cardsSlice';
 import { useGetCardsQuery } from '../API/rickAndMortyAPI';
@@ -56,7 +57,11 @@ const Content: FC = () => {
     } else {
       dispatch(removeCardsIsLoading());
     }
-  }, [isLoading, isFetching]);
+
+    if (isSuccess) dispatch(setCards(sliceData()));
+
+    if (isError) dispatch(setCards(null));
+  }, [isSuccess, isError, isLoading, isFetching]);
 
   if (isLoading) return <Spinner />;
 
