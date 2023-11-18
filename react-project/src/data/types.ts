@@ -33,6 +33,11 @@ export type ResponseData = {
   error?: string;
 };
 
+export type ErrorResponse = {
+  status: number;
+  data: Record<'error', string>;
+};
+
 export type SelectData = {
   selectLabel: string;
   selectOptions: number[];

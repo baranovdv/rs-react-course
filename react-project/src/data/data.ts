@@ -2,6 +2,7 @@ export const COMMON_DATA = {
   inputLabel: 'Search by name:',
   tableHeaders: ['Name:', 'Description:'],
   APIurl: 'https://rickandmortyapi.com/api/character/',
+  baseAPIurl: 'https://rickandmortyapi.com/api',
   localStorageQuery: 'search_Query',
   localStorageItemsOnPage: 'itemsOnPage',
   pageURLQuery: 'page',
@@ -27,6 +28,7 @@ export const ERROR_DATA = {
   consoleMessage: 'Error caught by ErrorBoundary:',
   htmlMessage: 'Something went wrong. Please try again later.',
   pageError: 0,
+  notFoundCode: 404,
 };
 
 export const TEST_DATA = {
