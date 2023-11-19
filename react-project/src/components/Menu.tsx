@@ -14,9 +14,13 @@ import {
   setItemsOnPage,
   setSearchQuery,
 } from '../store/cardsSlice';
+import { useGetCardsQuery } from '../API/rickAndMortyAPI';
+import { useCreateRequest } from '../utils/API/createRequest';
 
 const Menu: FC = () => {
   const itemsOnPage = useAppSelector(selectItemsOnPage);
+
+  const { refetch } = useGetCardsQuery(useCreateRequest(1));
 
   const dispatch = useAppDispatch();
 
@@ -44,6 +48,7 @@ const Menu: FC = () => {
     dispatch(setItemsOnPage(Number(event.target.value)));
     setItemsOnPageToLS(event.target.value);
 
+    refetch();
     searchParams.set(COMMON_DATA.pageURLQuery, COMMON_DATA.startPage);
     setSearchParams(searchParams);
   };

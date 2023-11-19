@@ -32,7 +32,7 @@ const Content: FC = () => {
     searchParams.get(COMMON_DATA.pageURLQuery) || ERROR_DATA.pageError
   );
 
-  const { data, isLoading, isSuccess, isError, isFetching, error } =
+  const { data, isLoading, isSuccess, isError, isFetching, error, refetch } =
     useGetCardsQuery(useCreateRequest(page));
 
   const numOfPages = useRef<number>(1);
@@ -43,6 +43,8 @@ const Content: FC = () => {
   };
 
   const handlePageChange = (pageNum: number) => {
+    if ((itemsOnPage * page) % COMMON_DATA.defaultItemsOnPage) refetch();
+
     searchParams.set(COMMON_DATA.pageURLQuery, pageNum.toString());
     setSearchParams(searchParams);
   };
