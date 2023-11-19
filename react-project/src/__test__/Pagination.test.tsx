@@ -3,9 +3,10 @@ import * as reactRouterDom from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Content } from '../components/Content';
 import { MemoryRouter } from 'react-router-dom';
-import { StoreProvider } from '../store/StoreContext';
 import { useState } from 'react';
 import { COMMON_DATA, TEST_DATA } from '../data/data';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 
 let searchParamsMock = '';
 
@@ -46,11 +47,11 @@ describe('Pagination', () => {
 
   it('component updates URL query parameter when page changes', async () => {
     render(
-      <StoreProvider>
+      <Provider store={store}>
         <MemoryRouter initialEntries={['/?page=1']}>
           <Content />
         </MemoryRouter>
-      </StoreProvider>
+      </Provider>
     );
     await screen.findAllByTestId(TEST_DATA.SPINNER);
     let nextPage = await screen.findAllByTestId(TEST_DATA.NEXT_PAGE);

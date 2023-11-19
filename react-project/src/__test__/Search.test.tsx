@@ -1,13 +1,14 @@
 import { afterAll, describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { StoreProvider } from '../store/StoreContext';
 import { Main } from '../components/Main';
 import {
   getSearchQueryFromLS,
   setSearchQueryToLS,
 } from '../utils/localStorage/localStorage';
 import { TEST_DATA } from '../data/data';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 
 const SEARCH_QUERY_TEST = 'testQuery';
 
@@ -18,11 +19,11 @@ describe('Search', () => {
 
   it('search button saves the entered value to the local storage', async () => {
     render(
-      <StoreProvider>
+      <Provider store={store}>
         <MemoryRouter>
           <Main />
         </MemoryRouter>
-      </StoreProvider>
+      </Provider>
     );
     await screen.findAllByTestId(TEST_DATA.SPINNER);
 
@@ -35,17 +36,18 @@ describe('Search', () => {
     fireEvent.click(searchButton);
 
     await screen.findAllByTestId(TEST_DATA.SPINNER);
+    await screen.findAllByTestId(TEST_DATA.SPINNER);
 
     expect(getSearchQueryFromLS()).toEqual(SEARCH_QUERY_TEST);
   });
 
   it('component retrieves the value from the local storage upon mounting', async () => {
     render(
-      <StoreProvider>
+      <Provider store={store}>
         <MemoryRouter>
           <Main />
         </MemoryRouter>
-      </StoreProvider>
+      </Provider>
     );
     await screen.findAllByTestId(TEST_DATA.SPINNER);
 

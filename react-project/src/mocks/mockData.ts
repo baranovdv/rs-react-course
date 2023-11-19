@@ -80,6 +80,8 @@ const storeDataNotFound: Store = {
   searchQuery: 'errorQuery',
   itemsOnPage: 20,
   content: null,
+  cardsIsLoading: false,
+  detailsIsLoading: false,
 };
 
 export { mockData, storeDataNotFound, mockNotFound };

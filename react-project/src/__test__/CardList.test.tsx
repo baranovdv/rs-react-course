@@ -1,19 +1,21 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Content } from '../components/Content';
-import { BrowserRouter } from 'react-router-dom';
-import { StoreContext, StoreProvider } from '../store/StoreContext';
-import { mockData, storeDataNotFound } from '../mocks/mockData';
+import { MemoryRouter } from 'react-router-dom';
+import { mockData } from '../mocks/mockData';
 import { COMMON_DATA, TEST_DATA } from '../data/data';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
+import { mockStore } from '../mocks/mockStore';
 
 describe('Content', () => {
   it('renders specified number of cards', async () => {
     render(
-      <StoreProvider>
-        <BrowserRouter>
+      <Provider store={store}>
+        <MemoryRouter>
           <Content />
-        </BrowserRouter>
-      </StoreProvider>
+        </MemoryRouter>
+      </Provider>
     );
     await screen.findAllByTestId(TEST_DATA.SPINNER);
     const content = await screen.findAllByTestId(TEST_DATA.CARD);
@@ -21,25 +23,24 @@ describe('Content', () => {
   });
   it('if no cards are present', async () => {
     render(
-      <StoreProvider>
-        <StoreContext.Provider value={storeDataNotFound}>
-          <BrowserRouter>
-            <Content />
-          </BrowserRouter>
-        </StoreContext.Provider>
-      </StoreProvider>
+      <Provider store={mockStore}>
+        <MemoryRouter>
+          <Content />
+        </MemoryRouter>
+      </Provider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
+
     const content = await screen.findByText(COMMON_DATA.notFound);
     expect(content).toBeInTheDocument();
   });
   it('card component renders the relevant card data', async () => {
     render(
-      <StoreProvider>
-        <BrowserRouter>
+      <Provider store={store}>
+        <MemoryRouter>
           <Content />
-        </BrowserRouter>
-      </StoreProvider>
+        </MemoryRouter>
+      </Provider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
     const card = await screen.findAllByTestId(TEST_DATA.CARD);

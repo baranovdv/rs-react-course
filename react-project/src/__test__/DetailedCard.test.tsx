@@ -1,20 +1,23 @@
 import { describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { StoreProvider } from '../store/StoreContext';
 import { mockData } from '../mocks/mockData';
 import { TEST_DATA } from '../data/data';
 import { routerConfig } from '../router/router';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 
 describe('Detailed Card', () => {
   it('loading indicator is displayed while fetching data', async () => {
     const router = createMemoryRouter(routerConfig);
     render(
-      <StoreProvider>
+      <Provider store={store}>
         <RouterProvider router={router} />
-      </StoreProvider>
+      </Provider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
+    await screen.findByTestId(TEST_DATA.SPINNER);
+
     const cards = screen.getAllByTestId(TEST_DATA.CARD);
     const cardButton = cards[0].getElementsByTagName('button');
 
@@ -28,11 +31,13 @@ describe('Detailed Card', () => {
   it('detailed card component correctly displays the detailed card data', async () => {
     const router = createMemoryRouter(routerConfig);
     render(
-      <StoreProvider>
+      <Provider store={store}>
         <RouterProvider router={router} />
-      </StoreProvider>
+      </Provider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
+    await screen.findByTestId(TEST_DATA.SPINNER);
+
     const cards = screen.getAllByTestId(TEST_DATA.CARD);
     const cardButton = cards[0].getElementsByTagName('button');
 
@@ -75,11 +80,13 @@ describe('Detailed Card', () => {
   it('clicking the close button hides the component', async () => {
     const router = createMemoryRouter(routerConfig);
     render(
-      <StoreProvider>
+      <Provider store={store}>
         <RouterProvider router={router} />
-      </StoreProvider>
+      </Provider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
+    await screen.findByTestId(TEST_DATA.SPINNER);
+
     const cards = screen.getAllByTestId(TEST_DATA.CARD);
     const cardButton = cards[0].getElementsByTagName('button');
 

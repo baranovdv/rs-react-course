@@ -41,4 +41,5 @@ export const TEST_DATA = {
   SEARCH_INPUT: 'search-input-item',
   SEARCH_SUBMIT: 'search-button-submit',
   IMG_404: 'error_404_img',
+  SEARCH_ERROR_QUERY: 'errorQuery',
 };
