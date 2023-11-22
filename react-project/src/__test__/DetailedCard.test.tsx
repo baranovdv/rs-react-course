@@ -16,9 +16,8 @@ describe('Detailed Card', () => {
       </Provider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
-    await screen.findByTestId(TEST_DATA.SPINNER);
 
-    const cards = screen.getAllByTestId(TEST_DATA.CARD);
+    const cards = await screen.findAllByTestId(TEST_DATA.CARD);
     const cardButton = cards[0].getElementsByTagName('button');
 
     const details = screen.queryByTestId(TEST_DATA.DETAILS);
@@ -36,9 +35,8 @@ describe('Detailed Card', () => {
       </Provider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
-    await screen.findByTestId(TEST_DATA.SPINNER);
 
-    const cards = screen.getAllByTestId(TEST_DATA.CARD);
+    const cards = await screen.findAllByTestId(TEST_DATA.CARD);
     const cardButton = cards[0].getElementsByTagName('button');
 
     let details = screen.queryByTestId(TEST_DATA.DETAILS);
@@ -47,7 +45,7 @@ describe('Detailed Card', () => {
     fireEvent.click(cardButton[0]);
     await screen.findByTestId(TEST_DATA.SPINNER);
 
-    details = screen.getByTestId(TEST_DATA.DETAILS);
+    details = await screen.findByTestId(TEST_DATA.DETAILS);
 
     const detailsImg = details.getElementsByTagName('img');
     expect(detailsImg[0].src).toBe(mockData.results[0].image);
@@ -85,9 +83,8 @@ describe('Detailed Card', () => {
       </Provider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
-    await screen.findByTestId(TEST_DATA.SPINNER);
 
-    const cards = screen.getAllByTestId(TEST_DATA.CARD);
+    const cards = await screen.findAllByTestId(TEST_DATA.CARD);
     const cardButton = cards[0].getElementsByTagName('button');
 
     let details = screen.queryByTestId(TEST_DATA.DETAILS);
@@ -96,7 +93,7 @@ describe('Detailed Card', () => {
     fireEvent.click(cardButton[0]);
     await screen.findByTestId(TEST_DATA.SPINNER);
 
-    details = screen.queryByTestId(TEST_DATA.DETAILS);
+    details = await screen.findByTestId(TEST_DATA.DETAILS);
     expect(details).toBeInTheDocument();
 
     const closeButton = screen.getByTestId(TEST_DATA.ASIDE_BUTTON_CLOSE);

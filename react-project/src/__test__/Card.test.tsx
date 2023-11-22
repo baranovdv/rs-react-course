@@ -16,9 +16,8 @@ describe('Card', () => {
       </Provider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
-    await screen.findByTestId(TEST_DATA.SPINNER);
 
-    const cards = screen.getAllByTestId(TEST_DATA.CARD);
+    const cards = await screen.findAllByTestId(TEST_DATA.CARD);
     const cardButton = cards[0].getElementsByTagName('button');
     let details = screen.queryByTestId(TEST_DATA.DETAILS);
 
@@ -26,7 +25,7 @@ describe('Card', () => {
 
     fireEvent.click(cardButton[0]);
     await screen.findByTestId(TEST_DATA.SPINNER);
-    details = screen.queryByTestId(TEST_DATA.DETAILS);
+    details = await screen.findByTestId(TEST_DATA.DETAILS);
 
     expect(details).toBeInTheDocument();
   });
@@ -38,9 +37,8 @@ describe('Card', () => {
       </Provider>
     );
     await screen.findByTestId(TEST_DATA.SPINNER);
-    await screen.findByTestId(TEST_DATA.SPINNER);
 
-    const cards = screen.getAllByTestId(TEST_DATA.CARD);
+    const cards = await screen.findAllByTestId(TEST_DATA.CARD);
     const cardButton = cards[0].getElementsByTagName('button');
     clearIsAPICalled();
     fireEvent.click(cardButton[0]);
