@@ -44,6 +44,7 @@ export const QUERYS: Record<string, urlQuery> = {
 export const TEST_DATA = {
   CARD: 'card-item',
   DETAILS: 'details-item',
+  SELECT: 'select-item',
   ASIDE_BUTTON_CLOSE: 'aside-button-close',
   NEXT_PAGE: 'button-next-page',
   PREV_PAGE: 'button-prev-page',

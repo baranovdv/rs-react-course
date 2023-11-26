@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 import { mockData } from '@/mocks/mockData';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
 import { createMockRouter } from '@/mocks/createMockRouter';
-import { TEST_DATA } from '@/data/data';
+import { COMMON_DATA, TEST_DATA } from '@/data/data';
 import { Aside } from '@/components/Aside';
 
 describe('Details', () => {
@@ -46,5 +46,15 @@ describe('Details', () => {
     expect(detailsInfo[5].textContent?.split(' ')[1]).toBe(
       mockData.results[0].episode[0]
     );
+  });
+  it('if no card is present', async () => {
+    const router = createMockRouter({});
+    render(
+      <RouterContext.Provider value={router}>
+        <Aside data={null} />
+      </RouterContext.Provider>
+    );
+    const content = screen.getByText(COMMON_DATA.notFound);
+    expect(content).toBeInTheDocument();
   });
 });

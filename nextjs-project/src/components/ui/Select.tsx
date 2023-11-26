@@ -1,3 +1,4 @@
+import { TEST_DATA } from '@/data/data';
 import { type SelectData } from '@/data/types';
 import { type FC } from 'react';
 
@@ -14,6 +15,7 @@ const Select: FC<SelectProps> = ({ data, selected, onSelect }) => {
       <select
         className="p-1 border-2 border-red-800 bg-red-100"
         defaultValue={selected}
+        data-testid={TEST_DATA.SELECT}
         onChange={(event: React.ChangeEvent<HTMLSelectElement>): void => {
           onSelect(event);
         }}

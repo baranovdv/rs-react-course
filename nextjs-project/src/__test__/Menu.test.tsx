@@ -11,8 +11,8 @@ import Main from '@/components/Main';
 
 const SEARCH_QUERY_TEST = 'testQuery';
 
-describe('Menu', () => {
-  it('after click on select button url changes with input value', () => {
+describe('Search', () => {
+  it('after click on search button url changes with input value', () => {
     const router = createMockRouter({});
     render(
       <RouterContext.Provider value={router}>
