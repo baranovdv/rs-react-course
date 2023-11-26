@@ -4,8 +4,6 @@ import { Provider } from 'react-redux';
 import { wrapper } from './api/store';
 
 function App({ Component, ...rest }: AppProps) {
-  console.log('');
-
   const { store, props } = wrapper.useWrappedStore(rest);
   return (
     <Provider store={store}>

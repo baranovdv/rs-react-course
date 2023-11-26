@@ -3,13 +3,8 @@
 import Main from '@/components/Main';
 import { type ResponseData } from '@/data/types';
 import { createRequest } from '@/utils/createRequest';
-import { type QueryStatus } from '@reduxjs/toolkit/query';
-import { useRouter } from 'next/router';
-import {
-  getCards,
-  getRunningQueriesThunk,
-  useGetCardsQuery,
-} from './api/rickAndMortyAPI';
+import { QueryStatus } from '@reduxjs/toolkit/query';
+import { getCards, getRunningQueriesThunk } from './api/rickAndMortyAPI';
 import { wrapper } from './api/store';
 
 import Layout from './layout';
@@ -24,21 +19,26 @@ export const getServerSideProps = wrapper.getServerSideProps(
     await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
     const req = `getCards("${request}")`;
-    const status = store.getState().api.queries[req]?.status ?? null;
+    const storeData = store.getState().api.queries[req];
+
+    const status = storeData?.status ?? null;
+    const response: ResponseData | null = storeData?.data ?? null;
     return {
-      props: { status },
+      props: { status, response },
     };
   }
 );
 
-export default function Home({ status }: { status: QueryStatus | null }) {
-  const router = useRouter();
+export default function Home({
+  status,
+  response,
+}: {
+  status?: QueryStatus | null;
+  response: ResponseData | null;
+}) {
+  let data: ResponseData = response ?? {};
 
-  const request = createRequest(router.query);
-  const result = useGetCardsQuery(request);
-  let data: ResponseData = result?.data ?? {};
-
-  if (status === 'rejected') {
+  if (status === QueryStatus.rejected) {
     data = {};
   }
 
