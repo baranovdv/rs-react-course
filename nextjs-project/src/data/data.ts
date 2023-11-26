@@ -42,7 +42,6 @@ export const QUERYS: Record<string, urlQuery> = {
 };
 
 export const TEST_DATA = {
-  SPINNER: 'spinner',
   CARD: 'card-item',
   DETAILS: 'details-item',
   ASIDE_BUTTON_CLOSE: 'aside-button-close',
