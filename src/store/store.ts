@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import xxxSlice from './slice';
+import uncontrolledSlice from './uncontrolledSlice';
 
 export const store = configureStore({
   reducer: {
-    xxx: xxxSlice,
+    uncontrolled: uncontrolledSlice,
   },
 });
 
