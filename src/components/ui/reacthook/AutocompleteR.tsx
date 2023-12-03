@@ -1,18 +1,18 @@
 import { forwardRef, useState } from 'react';
-import { FieldError, UseFormSetValue, UseFormTrigger } from 'react-hook-form';
+import { UseFormSetValue, UseFormTrigger } from 'react-hook-form';
 import { NOT_FOUND } from '../../../data/data';
 import { MyInputData } from '../../../data/interfaces';
 
 interface GenericInputProps
   extends React.PropsWithoutRef<JSX.IntrinsicElements['input']> {
-  errors: FieldError | undefined;
+  error: string | undefined;
   initArray: string[];
   setValue: UseFormSetValue<MyInputData>;
   trigger: UseFormTrigger<MyInputData>;
 }
 
-const Autocomplete = forwardRef<HTMLInputElement, GenericInputProps>(
-  ({ children, errors, initArray, setValue, trigger, ...props }, ref) => {
+const AutocompleteR = forwardRef<HTMLInputElement, GenericInputProps>(
+  ({ children, error, initArray, setValue, trigger, ...props }, ref) => {
     const [showCountrySearch, setShowCountrySearch] = useState<boolean>(false);
 
     const [countrySearch, setCountrySearch] = useState<string[]>(initArray);
@@ -76,9 +76,9 @@ const Autocomplete = forwardRef<HTMLInputElement, GenericInputProps>(
               })}
             </ul>
           )}
-          {errors && (
+          {error && (
             <p className="absolute bottom-[-0.7rem] left-0 whitespace-nowrap text-red-600 text-xs">
-              {errors.message}
+              {error}
             </p>
           )}
         </div>
@@ -87,49 +87,4 @@ const Autocomplete = forwardRef<HTMLInputElement, GenericInputProps>(
   }
 );
 
-{
-  /* <div className={`flex justify-around`}>
-  <label className="flex w-[30%] justify-end items-center text-2xl">
-    Find Country*
-  </label>
-  <div className="relative flex flex-col w-[35%]">
-    <input
-      name={props.name}
-      {...props}
-      ref={ref}
-      onChange={countryOnChangeHandler}
-      onFocus={countryOnFocusHandler}
-      onBlur={countryOnBlurHandler}
-      className="w-full px-1 border-2 border-red-800"
-    />
-    {showCountrySearch && (
-      <ul className="absolute flex flex-col gap-1 top-[1.8rem] left-0 w-full h-fit max-h-40 p-4 pt-2 overflow-scroll bg-[rgba(255,255,255,0.8)] z-10">
-        {countrySearch.map((country) => {
-          if (country === NOT_FOUND)
-            return (
-              <li key={country} className="relative z-20">
-                {country}
-              </li>
-            );
-          return (
-            <li
-              onMouseDown={() => countryClickHandler(country)}
-              key={country}
-              className="relative z-20 cursor-pointer hover:underline"
-            >
-              {country}
-            </li>
-          );
-        })}
-      </ul>
-    )}
-    {errors.country && (
-      <p className="absolute bottom-[-0.7rem] left-0 text-red-600 text-xs">
-        {errors.country.message}
-      </p>
-    )}
-  </div>
-</div>; */
-}
-
-export { Autocomplete };
+export { AutocompleteR };

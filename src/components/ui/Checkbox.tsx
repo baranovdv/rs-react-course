@@ -1,13 +1,12 @@
 import { forwardRef } from 'react';
-import { FieldError } from 'react-hook-form';
 
 interface GenericInputProps
   extends React.PropsWithoutRef<JSX.IntrinsicElements['input']> {
-  errors: FieldError | undefined;
+  error: string | undefined;
 }
 
-const UploadImage = forwardRef<HTMLInputElement, GenericInputProps>(
-  ({ children, errors, ...props }, ref) => {
+const Checkbox = forwardRef<HTMLInputElement, GenericInputProps>(
+  ({ children, error, ...props }, ref) => {
     return (
       <div className={`flex justify-around`}>
         <label
@@ -16,18 +15,17 @@ const UploadImage = forwardRef<HTMLInputElement, GenericInputProps>(
         >
           {children}
         </label>
-        <div className="relative flex flex-col w-[35%]">
+        <div className="relative flex flex-col justify-center w-[35%]">
           <input
-            type="file"
-            accept="image/png, image/jpeg"
+            type="checkbox"
             id={props.name}
             {...props}
             ref={ref}
-            className="w-full"
+            className="w-fit px-1"
           />
-          {errors && (
-            <p className="absolute bottom-[-0.7rem] left-0 whitespace-nowrap text-red-600 text-xs">
-              {errors.message}
+          {error && (
+            <p className="absolute bottom-[-0.4rem] left-0 whitespace-nowrap text-red-600 text-xs">
+              {error}
             </p>
           )}
         </div>
@@ -36,4 +34,4 @@ const UploadImage = forwardRef<HTMLInputElement, GenericInputProps>(
   }
 );
 
-export { UploadImage };
+export { Checkbox };

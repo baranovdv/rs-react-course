@@ -1,14 +1,13 @@
 import { forwardRef } from 'react';
-import { FieldError } from 'react-hook-form';
 
 interface GenericInputProps
   extends React.PropsWithoutRef<JSX.IntrinsicElements['select']> {
-  errors: FieldError | undefined;
+  error: string | undefined;
   array: readonly string[] | number[];
 }
 
 const Select = forwardRef<HTMLSelectElement, GenericInputProps>(
-  ({ children, errors, array, ...props }, ref) => {
+  ({ children, error, array, ...props }, ref) => {
     return (
       <div className={`flex justify-around`}>
         <label
@@ -33,9 +32,9 @@ const Select = forwardRef<HTMLSelectElement, GenericInputProps>(
               );
             })}
           </select>
-          {errors && (
+          {error && (
             <p className="absolute bottom-[-0.7rem] left-0 whitespace-nowrap text-red-600 text-xs">
-              {errors.message}
+              {error}
             </p>
           )}
         </div>

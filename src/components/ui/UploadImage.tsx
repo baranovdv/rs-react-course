@@ -1,13 +1,12 @@
 import { forwardRef } from 'react';
-import { FieldError } from 'react-hook-form';
 
 interface GenericInputProps
   extends React.PropsWithoutRef<JSX.IntrinsicElements['input']> {
-  errors: FieldError | undefined;
+  error: string | undefined;
 }
 
-const Input = forwardRef<HTMLInputElement, GenericInputProps>(
-  ({ children, errors, ...props }, ref) => {
+const UploadImage = forwardRef<HTMLInputElement, GenericInputProps>(
+  ({ children, error, ...props }, ref) => {
     return (
       <div className={`flex justify-around`}>
         <label
@@ -18,14 +17,16 @@ const Input = forwardRef<HTMLInputElement, GenericInputProps>(
         </label>
         <div className="relative flex flex-col w-[35%]">
           <input
-            name={props.name}
+            type="file"
+            accept="image/png, image/jpeg"
+            id={props.name}
             {...props}
             ref={ref}
-            className="w-full px-1 border-2 border-red-800"
+            className="w-full"
           />
-          {errors && (
+          {error && (
             <p className="absolute bottom-[-0.7rem] left-0 whitespace-nowrap text-red-600 text-xs">
-              {errors.message}
+              {error}
             </p>
           )}
         </div>
@@ -34,4 +35,4 @@ const Input = forwardRef<HTMLInputElement, GenericInputProps>(
   }
 );
 
-export { Input };
+export { UploadImage };
