@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
+import countriesSlice from './countriesSlice';
 import resultsSlice from './resultsSlice';
 
 export const store = configureStore({
   reducer: {
     results: resultsSlice,
+    countries: countriesSlice,
   },
 });
 

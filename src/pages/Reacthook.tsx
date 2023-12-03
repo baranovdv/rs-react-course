@@ -8,12 +8,12 @@ import { MyFormData, MyInputData } from '../data/interfaces';
 import { schema } from '../data/schema';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addResult, selectResultsStore } from '../store/resultsSlice';
-import { countriesList } from '../data/countriesList';
 import { Input } from '../components/ui/reacthook/Input';
 import { Select } from '../components/ui/reacthook/Select';
 import { Checkbox } from '../components/ui/reacthook/Checkbox';
 import { UploadImage } from '../components/ui/reacthook/UploadImage';
 import { Autocomplete } from '../components/ui/reacthook/Autocomplete';
+import { selectCountriesStore } from '../store/countriesSlice';
 
 const REACTHOOK_TITLE = 'Reacthook';
 
@@ -27,6 +27,8 @@ const Reacthook: FC = () => {
   const formInitData = useAppSelector(selectResultsStore).find(
     (result) => result.id === id
   );
+
+  const countriesInitData = useAppSelector(selectCountriesStore);
 
   const {
     setValue,
@@ -121,7 +123,7 @@ const Reacthook: FC = () => {
 
       <Autocomplete
         errors={errors.country}
-        initArray={countriesList}
+        initArray={countriesInitData}
         setValue={setValue}
         trigger={trigger}
         {...register('country')}
