@@ -3,7 +3,7 @@ import { FC, ReactNode } from 'react';
 interface ButtonProps {
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   children: ReactNode;
-  type: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   className?: string;
   testId?: string;
   disabled?: boolean;

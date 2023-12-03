@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -13,7 +13,7 @@ import {
 import { MyFormData, MyInputData } from '../data/interfaces';
 import { schema } from '../data/schema';
 import { useNavigate, useParams } from 'react-router-dom';
-import { addResult, selectResultsStore } from '../store/resultsSlice';
+import { addResult } from '../store/resultsSlice';
 import { Input } from '../components/ui/Input';
 import { Select } from '../components/ui/Select';
 import { Checkbox } from '../components/ui/Checkbox';
@@ -32,10 +32,6 @@ const Reacthook: FC = () => {
 
   const id = useParams().id || NO_ID;
 
-  const formInitData = useAppSelector(selectResultsStore).find(
-    (result) => result.id === id
-  );
-
   const countriesInitData = useAppSelector(selectCountriesStore);
 
   const {
@@ -48,20 +44,6 @@ const Reacthook: FC = () => {
     mode: 'all',
     resolver: yupResolver<MyInputData>(schema),
   });
-
-  useEffect(() => {
-    if (formInitData) {
-      setValue('name', formInitData.name);
-      setValue('age', formInitData.age);
-      setValue('email', formInitData.email);
-      setValue('gender', formInitData.gender);
-      setValue('password', formInitData.password);
-      setValue('confirmPassword', formInitData.password);
-      setValue('tandc', formInitData.tandc);
-      setValue('country', formInitData.country);
-      trigger();
-    }
-  }, []);
 
   const onSubmit = (data: MyInputData) => {
     if (data.uploadImage === undefined) return;

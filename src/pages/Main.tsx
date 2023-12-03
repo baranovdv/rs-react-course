@@ -23,15 +23,6 @@ const Main: FC = () => {
     }
   };
 
-  const updateFormHandler = (type: FormType, id: string): void => {
-    if (type === 'uncontrolled') {
-      navigate(`${ROUTES.uncontrolled}/${id}`);
-    }
-    if (type === 'reacthook') {
-      navigate(`${ROUTES.reacthook}/${id}`);
-    }
-  };
-
   return (
     <main>
       <h1 className="text-center font-bold text-3xl my-3">Main page</h1>
@@ -56,9 +47,6 @@ const Main: FC = () => {
               key={result.id}
               title={`${result.formType} form`}
               data={result}
-              onUpdateClick={() =>
-                updateFormHandler(result.formType, result.id)
-              }
             />
           );
         })}

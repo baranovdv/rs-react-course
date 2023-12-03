@@ -1,17 +1,14 @@
 import { FC, useEffect, useState } from 'react';
 import { MyResultData } from '../data/interfaces';
-import { Button } from './ui/Button';
 
 interface ResultProps {
-  onUpdateClick: (event: React.MouseEvent<HTMLElement>) => void;
   title: string;
   data: MyResultData;
 }
 
-const BUTTON_TITLE = 'Update';
 const NEW_RESULT_BGCOLOR = 'bg-green-300';
 
-const Result: FC<ResultProps> = ({ onUpdateClick, title, data }) => {
+const Result: FC<ResultProps> = ({ title, data }) => {
   const {
     name,
     password,
@@ -59,7 +56,6 @@ const Result: FC<ResultProps> = ({ onUpdateClick, title, data }) => {
         T & C: {tandc ? 'OK' : 'FAIL'}
       </h3>
       <h3 className="font-semibold self-start">Country: {country}</h3>
-      <Button onClick={onUpdateClick}>{BUTTON_TITLE}</Button>
     </div>
   );
 };

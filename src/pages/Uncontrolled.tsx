@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   ageArray,
@@ -10,7 +10,7 @@ import {
 } from '../data/data';
 import { MyFormData, MyInputData } from '../data/interfaces';
 import { useNavigate, useParams } from 'react-router-dom';
-import { addResult, selectResultsStore } from '../store/resultsSlice';
+import { addResult } from '../store/resultsSlice';
 import { ValidationError } from 'yup';
 import { schema } from '../data/schema';
 import { Input } from '../components/ui/Input';
@@ -31,10 +31,6 @@ const Uncontrolled: FC = () => {
 
   const id = useParams().id || NO_ID;
 
-  const formInitData = useAppSelector(selectResultsStore).find(
-    (result) => result.id === id
-  );
-
   const countriesInitData = useAppSelector(selectCountriesStore);
 
   const nameInputRef = useRef<HTMLInputElement>(null);
@@ -52,15 +48,6 @@ const Uncontrolled: FC = () => {
   >({});
 
   const passwordLength = passwordInputRef.current?.value.length;
-
-  useEffect(() => {
-    if (formInitData) {
-      // setValue('name', formInitData.name);
-      // setValue('age', formInitData.age);
-      // setValue('email', formInitData.email);
-      // setValue('gender', formInitData.gender);
-    }
-  }, []);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
