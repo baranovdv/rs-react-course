@@ -20,7 +20,7 @@ const UploadImage = forwardRef<HTMLInputElement, GenericInputProps>(
           <input
             type="file"
             accept="image/png, image/jpeg"
-            name={props.name}
+            id={props.name}
             {...props}
             ref={ref}
             className="w-full"

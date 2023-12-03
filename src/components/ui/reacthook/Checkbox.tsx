@@ -19,7 +19,7 @@ const Checkbox = forwardRef<HTMLInputElement, GenericInputProps>(
         <div className="relative flex flex-col justify-center w-[35%]">
           <input
             type="checkbox"
-            name={props.name}
+            id={props.name}
             {...props}
             ref={ref}
             className="w-fit px-1"

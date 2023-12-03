@@ -47,7 +47,7 @@ const Autocomplete = forwardRef<HTMLInputElement, GenericInputProps>(
         </label>
         <div className="relative flex flex-col w-[35%]">
           <input
-            name={props.name}
+            id={props.name}
             {...props}
             ref={ref}
             onChange={countryOnChangeHandler}
