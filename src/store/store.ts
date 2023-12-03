@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import uncontrolledSlice from './uncontrolledSlice';
+import resultsSlice from './resultsSlice';
 
 export const store = configureStore({
   reducer: {
-    uncontrolled: uncontrolledSlice,
+    results: resultsSlice,
   },
 });
 
