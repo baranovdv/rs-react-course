@@ -20,6 +20,7 @@ import { UploadImage } from '../components/ui/UploadImage';
 import { AutocompleteU } from '../components/ui/uncontrolled/AutocompleteU';
 import { selectCountriesStore } from '../store/countriesSlice';
 import { Button } from '../components/ui/Button';
+import { PasswordU } from '../components/ui/uncontrolled/PasswordU';
 
 const UNCONTROLLED_TITLE = 'Uncontrolled';
 
@@ -49,6 +50,8 @@ const Uncontrolled: FC = () => {
   const [inputErrors, setinputErrors] = useState<
     Partial<Record<keyof MyInputData, string>>
   >({});
+
+  const passwordLength = passwordInputRef.current?.value.length;
 
   useEffect(() => {
     if (formInitData) {
@@ -139,9 +142,13 @@ const Uncontrolled: FC = () => {
         {LABELS.name}
       </Input>
 
-      <Input ref={passwordInputRef} error={inputErrors?.password ?? ''}>
+      <PasswordU
+        ref={passwordInputRef}
+        error={inputErrors?.password ?? ''}
+        passwordLength={passwordLength || 0}
+      >
         {LABELS.password}
-      </Input>
+      </PasswordU>
 
       <Input
         ref={confirmPasswordInputRef}

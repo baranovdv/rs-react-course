@@ -25,7 +25,7 @@ export const schema = yup.object().shape({
     .required('Age is a required field'),
   email: yup
     .string()
-    .email('E-mail format is not correct')
+    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'E-mail format is not correct')
     .required('E-mail is a required field'),
   gender: yup
     .string()
@@ -34,7 +34,7 @@ export const schema = yup.object().shape({
   password: yup
     .string()
     .required('Please enter a password')
-    .min(8, 'Password must have at least 8 characters')
+    // .min(8, 'Password must have at least 8 characters')
     .matches(/[0-9]/, 'Password must have at least 1 digit')
     .matches(/[a-z]/, 'Password must have at least 1 lowercase letter')
     .matches(/[A-Z]/, 'Password must have at least 1 uppercase letter')

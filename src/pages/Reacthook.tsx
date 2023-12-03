@@ -21,6 +21,7 @@ import { UploadImage } from '../components/ui/UploadImage';
 import { AutocompleteR } from '../components/ui/reacthook/AutocompleteR';
 import { selectCountriesStore } from '../store/countriesSlice';
 import { Button } from '../components/ui/Button';
+import { PasswordR } from '../components/ui/reacthook/PasswordR';
 
 const REACTHOOK_TITLE = 'Reacthook';
 
@@ -100,9 +101,9 @@ const Reacthook: FC = () => {
         {LABELS.name}
       </Input>
 
-      <Input error={errors.password?.message} {...register('password')}>
+      <PasswordR error={errors.password?.message} {...register('password')}>
         {LABELS.password}
-      </Input>
+      </PasswordR>
 
       <Input
         error={errors.confirmPassword?.message}
