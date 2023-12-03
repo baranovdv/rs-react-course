@@ -18,7 +18,11 @@ const isRealCountry = (country: string | undefined) => {
 
 export const schema = yup.object().shape({
   name: yup.string().required('Name is a required field'),
-  age: yup.number().positive().integer().required('Age is a required field'),
+  age: yup
+    .number()
+    .positive()
+    .integer('Age must be Number')
+    .required('Age is a required field'),
   email: yup
     .string()
     .email('E-mail format is not correct')

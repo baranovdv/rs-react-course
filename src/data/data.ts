@@ -18,3 +18,15 @@ export const MAX_FILE_SIZE = 502400;
 export const NOT_FOUND = 'Not found';
 
 export const NO_ID = 'No ID';
+
+export const LABELS = {
+  name: 'Name:',
+  password: 'Password:',
+  confirmPassword: 'Confirm Password:',
+  age: 'Age:',
+  email: 'E-mail:',
+  gender: 'Gender:',
+  tandc: 'T & C:',
+  uploadImage: 'Upload Image',
+  country: 'Choose Country',
+};
