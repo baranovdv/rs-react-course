@@ -3,17 +3,24 @@ import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ageArray, Genders, LABELS, NO_ID } from '../data/data';
+import {
+  ageArray,
+  Genders,
+  LABELS,
+  NO_ID,
+  SUBMIT_BUTTON_TITLE,
+} from '../data/data';
 import { MyFormData, MyInputData } from '../data/interfaces';
 import { schema } from '../data/schema';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addResult, selectResultsStore } from '../store/resultsSlice';
-import { Input } from '../components/ui/reacthook/Input';
-import { Select } from '../components/ui/reacthook/Select';
-import { Checkbox } from '../components/ui/reacthook/Checkbox';
-import { UploadImage } from '../components/ui/reacthook/UploadImage';
-import { Autocomplete } from '../components/ui/reacthook/Autocomplete';
+import { Input } from '../components/ui/Input';
+import { Select } from '../components/ui/Select';
+import { Checkbox } from '../components/ui/Checkbox';
+import { UploadImage } from '../components/ui/UploadImage';
+import { AutocompleteR } from '../components/ui/reacthook/AutocompleteR';
 import { selectCountriesStore } from '../store/countriesSlice';
+import { Button } from '../components/ui/Button';
 
 const REACTHOOK_TITLE = 'Reacthook';
 
@@ -89,55 +96,61 @@ const Reacthook: FC = () => {
     >
       <h1 className="text-center font-bold text-3xl my-3">{REACTHOOK_TITLE}</h1>
 
-      <Input errors={errors.name} {...register('name')}>
+      <Input error={errors.name?.message} {...register('name')}>
         {LABELS.name}
       </Input>
 
-      <Input errors={errors.password} {...register('password')}>
+      <Input error={errors.password?.message} {...register('password')}>
         {LABELS.password}
       </Input>
 
-      <Input errors={errors.confirmPassword} {...register('confirmPassword')}>
+      <Input
+        error={errors.confirmPassword?.message}
+        {...register('confirmPassword')}
+      >
         {LABELS.confirmPassword}
       </Input>
 
-      <Select errors={errors.age} array={ageArray} {...register('age')}>
+      <Select error={errors.age?.message} array={ageArray} {...register('age')}>
         {LABELS.age}
       </Select>
 
-      <Input errors={errors.email} {...register('email')}>
+      <Input error={errors.email?.message} {...register('email')}>
         {LABELS.email}
       </Input>
 
-      <Select errors={errors.gender} array={Genders} {...register('gender')}>
+      <Select
+        error={errors.gender?.message}
+        array={Genders}
+        {...register('gender')}
+      >
         {LABELS.gender}
       </Select>
 
-      <Checkbox errors={errors.tandc} {...register('tandc')}>
+      <Checkbox error={errors.tandc?.message} {...register('tandc')}>
         {LABELS.tandc}
       </Checkbox>
 
-      <UploadImage errors={errors.uploadImage} {...register('uploadImage')}>
+      <UploadImage
+        error={errors.uploadImage?.message}
+        {...register('uploadImage')}
+      >
         {LABELS.uploadImage}
       </UploadImage>
 
-      <Autocomplete
-        errors={errors.country}
+      <AutocompleteR
+        error={errors.country?.message}
         initArray={countriesInitData}
         setValue={setValue}
         trigger={trigger}
         {...register('country')}
       >
         {LABELS.country}
-      </Autocomplete>
+      </AutocompleteR>
 
-      <button
-        className="px-4 py-2 w-36 self-center border-2 border-red-800 bg-red-100 hover:bg-red-400 active:bg-red-900 disabled:bg-gray-100"
-        type="submit"
-        disabled={!isValid}
-      >
-        {'Submit'}
-      </button>
+      <Button type="submit" disabled={!isValid} className="w-36 self-center">
+        {SUBMIT_BUTTON_TITLE}
+      </Button>
     </form>
   );
 };
