@@ -1,10 +1,5 @@
-export type GenderType = 'Male' | 'Female' | 'Unknown';
+import { Genders } from './data';
 
-export type MyFormData = {
-  name: string;
-  age: number;
-  email: string;
-  gender: GenderType;
-  img?: null;
-  country?: null;
-};
+export type GenderType = typeof Genders;
+
+export type FormType = 'uncontrolled' | 'reacthook';
