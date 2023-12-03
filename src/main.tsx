@@ -16,10 +16,10 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Main /> },
       {
-        path: '/uncontrolled',
+        path: '/uncontrolled/:id',
         element: <Uncontrolled />,
       },
-      { path: '/reacthook', element: <Reacthook /> },
+      { path: '/reacthook/:id', element: <Reacthook /> },
     ],
   },
 ]);
