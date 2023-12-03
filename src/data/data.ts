@@ -19,6 +19,8 @@ export const NOT_FOUND = 'Not found';
 
 export const NO_ID = 'No ID';
 
+export const SUBMIT_BUTTON_TITLE = 'Submit';
+
 export const LABELS = {
   name: 'Name:',
   password: 'Password:',
