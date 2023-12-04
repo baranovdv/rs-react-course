@@ -17,7 +17,10 @@ const isRealCountry = (country: string | undefined) => {
 };
 
 export const schema = yup.object().shape({
-  name: yup.string().required('Name is a required field'),
+  name: yup
+    .string()
+    .required('Name is a required field')
+    .matches(/^[A-Z][a-z]*$/, 'Should start with uppercase letter'),
   age: yup
     .number()
     .positive()
